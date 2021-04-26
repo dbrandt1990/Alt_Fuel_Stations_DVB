@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_23_155601) do
+ActiveRecord::Schema.define(version: 2021_04_26_160355) do
 
   create_table "notes", force: :cascade do |t|
     t.string "title"
@@ -57,13 +57,6 @@ ActiveRecord::Schema.define(version: 2021_04_23_155601) do
     t.string "zip"
     t.boolean "updates", default: false
     t.boolean "admin", default: false
-    t.boolean "NEMA1450", default: false
-    t.boolean "NEMA515", default: false
-    t.boolean "NEMA520", default: false
-    t.boolean "J1772", default: false
-    t.boolean "J1772combo", default: false
-    t.boolean "CHADEMO", default: false
-    t.boolean "Tesla", default: false
     t.boolean "BD", default: false
     t.boolean "CNG", default: false
     t.boolean "ELEC", default: false

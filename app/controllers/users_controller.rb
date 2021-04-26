@@ -25,7 +25,8 @@ class UsersController < ApplicationController
     end
 
     def update_settings
-
+        current_user.update(settings_params)
+        redirect_to user_path(current_user.id)
     end
 
     private 
@@ -36,14 +37,9 @@ class UsersController < ApplicationController
 
     def settings_params
         params.require(:user).permit(
+            :name,
+            :email,
             :zip,
-            :NEMA1450,
-            :NEMA515,
-            :NEMA520,
-            :J1772,
-            :J1772combos,
-            :CHADEMO,
-            :Tesla,
             :BD,
             :ELEC,
             :CNG,

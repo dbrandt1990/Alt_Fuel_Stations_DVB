@@ -2,10 +2,31 @@
 
 <%= form_for(:user) do |f|%>
 
-    <%= f.label :zip %><br>
-    <%= f.text_field :zip %><br>
+    <%= f.label :name %><br>
+    <%= f.text_field :name%><br>
 
-    <%= f.check_box :ELEC "Electric"%>
+    <%= f.label :email %><br>
+    <%= f.email_field :email %><br>
+
+    <%= f.label "Change Home Zip Code" %><br>
+    <%= f.text_field :zip %><br><br>
+
+    <h4><strong>Select Fuel Options Below</strong></h4><br>
+
+    <%= f.label "Electric" %>
+    <%= f.check_box :ELEC %><br>
+    <%= f.label "Biodisel" %>
+    <%= f.check_box :BD %><br>
+    <%= f.label "Compressed Natural Gas" %>
+    <%= f.check_box :CNG %><br>
+    <%= f.label "E85" %>
+    <%= f.check_box :E85 %><br>
+    <%= f.label "Hydrogen" %>
+    <%= f.check_box :HY %><br>
+    <%= f.label "Liquefied Natural Gas" %>
+    <%= f.check_box :LNG %><br>
+    <%= f.label "Propane" %>
+    <%= f.check_box :LPG %><br><br>
 
     <%= f.submit "Update Settings"%>
 <%end%>
