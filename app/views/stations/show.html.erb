@@ -4,8 +4,21 @@
    <p>City: <%= @station.city %></p>
    <p>State: <%= @station.state %></p>
    <p>Zip: <%= @station.zip %></p>
-   <p>Access: <%= @station.access %></p>
+   <p>Access: <%= @station.access.capitalize %></p>
    <p>Status: <%= @station.status %></p><br>
 
-   <p>Notes: <%= @station.notes %></p>
+   <p>Notes:</p>
+   <ul id="notes">
+   <% if @station.notes.empty? %>
+        <li>
+            <p>There are no notes for this station</p>
+        </li>
+   <% else %>
+   <% @station.notes.each do |n| %>
+        <li>
+            <p> <%= n.content %> </p>
+        </li>
+        <% end %>
+   <% end %>
+   </ul>
 </div>

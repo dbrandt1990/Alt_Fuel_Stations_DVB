@@ -30,7 +30,7 @@ module ApiController
             city = station["city"]
             state = station["state"]
             zip = station["zip"]
-            access = station["access_code"].capitalize
+            access = station["access_code"]
 
             #get array of outlets, set station attr for given outlet to true if exists
             # outlets = station["ev_connector_types"]
