@@ -1,0 +1,11 @@
+<h1><%= @user.name %>'s Settings</h1>
+
+<%= form_for(:user) do |f|%>
+
+    <%= f.label :zip %><br>
+    <%= f.text_field :zip %><br>
+
+    <%= f.check_box :ELEC "Electric"%>
+
+    <%= f.submit "Update Settings"%>
+<%end%>

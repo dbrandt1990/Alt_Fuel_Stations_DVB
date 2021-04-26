@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
 
+  get '/users/:id/settings' => 'users#settings', as: 'settings'
+  post '/users/:id/settings' => 'users#update_settings', as: 'update_settings'
 
   get '/logout' => 'sessions#destroy'
 

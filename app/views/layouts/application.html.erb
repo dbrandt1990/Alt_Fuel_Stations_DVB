@@ -23,8 +23,10 @@
           </button>
         <% if loggedin? %>
           <a class="navbar-brand" href="<%= "/users/#{current_user.id}"%>"/>Home</a>
-          <a class="navbar-brand" href="<%= "/users/#{current_user.id}" %>"/><%= current_user.name %>'s profile</a>
+          <a class="navbar-brand" href="<%= "/users/#{current_user.id}/settings" %>"/>Settings</a>
           <a class="navbar-brand" href="<%= "/logout" %>"/>Log Out</a>
+        <% else %>
+          <a class="navbar-brand" href="<%= "/signup" %>">Sign Up</a>
         <% end %>
         </div>
         <div class="navbar-collapse collapse">
