@@ -14,9 +14,13 @@
  *= require_self
  */
 
- html * {
-     font-family: Arial, Helvetica, sans-serif;
- }
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+ body {
+    padding-top: 70px;
+    padding-bottom: 30px;
+  }
 
  #signup_login_container {
     margin-top: 100px;
@@ -30,7 +34,7 @@
  }
 
  form {
-    margin-left: 3em;
+    margin-left: 1.5em;
     margin-bottom: 1.25em;
  }
 
