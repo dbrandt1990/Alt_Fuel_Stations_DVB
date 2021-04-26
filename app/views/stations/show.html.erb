@@ -1,9 +1,11 @@
-<div>
+<div id="card_container">
    <p>Name: <%= @station.name %></p>
-   <p>State: <%= @station.state %></p>
+   <p>Address: <%= @station.address %></p>
    <p>City: <%= @station.city %></p>
-   <p>Address: <%= @station.address %></p> 
-   <p>Access: <%= @station.access %></p> 
-   <p>Electric: <%= @station.electric? %></p> 
-   <p>Outlet Types: <%= @station.outlets %></p>
+   <p>State: <%= @station.state %></p>
+   <p>Zip: <%= @station.zip %></p>
+   <p>Access: <%= @station.access %></p>
+   <p>Status: <%= @station.status %></p><br>
+
+   <p>Notes: <%= @station.notes %></p>
 </div>
