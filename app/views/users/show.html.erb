@@ -1,1 +1,34 @@
 <h1>Welcome, <%= @user.name %>!</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Access</th>
+    <th>Link</th>
+  </tr>
+  <% @stations.each do |s|%>
+    <tr>
+        <td>
+            <%= s.name %>
+        </td>
+        <td>
+            <%= s.address %>
+        </td>
+        <td>
+            <%= s.access %>
+        </td>
+        <td>
+        <% if admin? %>
+            <% if a.flagged %>
+                <%= link_to "Flagged for Inspection #{a.name}", "/stations/#{s.id}"%>
+            <% else %>
+                <%= link_to "Show #{a.name}", "/stations/#{s.id}"%>
+            <% end %>
+        <%else%>
+           <%= link_to "Show #{a.name}", "/stations/#{s.id}"%>
+        <%end%>
+        </td>
+    </tr>
+  <% end %>
+</table>
