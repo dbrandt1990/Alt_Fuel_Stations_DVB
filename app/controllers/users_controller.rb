@@ -9,8 +9,7 @@ class UsersController < ApplicationController
 
         if @user.save
             session[:user_id] = @user.id
-            #create users_stations with zip
-            stations = get_stations_in_zip
+            #create users_stations with zip and associate them
             redirect_to user_path(@user)
         else
             render new_user_path

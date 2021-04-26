@@ -1,4 +1,5 @@
 <h1>Welcome, <%= @user.name %>!</h1>
+<h4> You have <%= @stations.count %> stations near you</h4>
 
 <table>
   <tr>
@@ -20,13 +21,13 @@
         </td>
         <td>
         <% if admin? %>
-            <% if a.flagged %>
-                <%= link_to "Flagged for Inspection #{a.name}", "/stations/#{s.id}"%>
+            <% if s.flagged %>
+                <%= link_to "Flagged for Inspection", "/stations/#{s.id}", :style=>'color: red;'%>
             <% else %>
-                <%= link_to "Show #{a.name}", "/stations/#{s.id}"%>
+                <%= link_to "Show #{s.name}", "/stations/#{s.id}"%>
             <% end %>
         <%else%>
-           <%= link_to "Show #{a.name}", "/stations/#{s.id}"%>
+           <%= link_to "Show #{s.name}", "/stations/#{s.id}"%>
         <%end%>
         </td>
     </tr>
