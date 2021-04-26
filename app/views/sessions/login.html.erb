@@ -1,0 +1,14 @@
+<div id="signup_login_container">
+
+<h1>Login</h1>
+
+<%= form_tag "/login" %>
+<%= label_tag "Email "%>
+<%= email_field_tag('email')%><br>
+<%= label_tag "Password " %>
+<%= password_field_tag('password') %><br>
+<%= submit_tag "Sign In" %>
+
+
+</div>
+<% #!not sure if this si submitting correctly yet%>
