@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+    extend ApiController
 
     def new
         @user = User.new
@@ -32,6 +33,11 @@ class UsersController < ApplicationController
 
     def update_settings
         current_user.update(settings_params)
+        #remove all stations that do not meet the users settings
+        current_user.stations.each do |s|
+            s.destroy
+        end
+
         ApiController.create_station_objects(current_user, ApiController.get_stations_with_fuel_types(current_user))
         redirect_to user_path(current_user.id)
     end

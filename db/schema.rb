@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_26_220758) do
+ActiveRecord::Schema.define(version: 2021_04_27_173021) do
 
   create_table "notes", force: :cascade do |t|
     t.text "content"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2021_04_26_220758) do
     t.boolean "NEMA515", default: false
     t.boolean "NEMA520", default: false
     t.boolean "J1772", default: false
-    t.boolean "J1772combo", default: false
+    t.boolean "J1772COMBO", default: false
     t.boolean "CHADEMO", default: false
     t.boolean "Tesla", default: false
     t.boolean "BD", default: false

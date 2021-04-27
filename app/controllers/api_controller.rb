@@ -6,7 +6,7 @@ module ApiController
     def self.get_stations_in_zip(user)
         user_zip = user.zip
         #apikey not hidden
-        url = "https://developer.nrel.gov/api/alt-fuel-stations/v1.json?zip=#{user_zip}&api_key=#{ENV[API_KEY]}"
+        url = "https://developer.nrel.gov/api/alt-fuel-stations/v1.json?zip=#{user_zip}&api_key=#{ENV['API_KEY']}"
         doc = HTTParty.get(url)
         data = doc.parsed_response
         #return stations 
@@ -35,7 +35,7 @@ module ApiController
         fuel_type_url = fuel_type_url.join(',')
        
         #apikey not hidden
-        url = "https://developer.nrel.gov/api/alt-fuel-stations/v1.json?fuel_type=#{fuel_type_url}&zip=#{user.zip}&api_key=#{ENV[API_KEY]}"
+        url = "https://developer.nrel.gov/api/alt-fuel-stations/v1.json?fuel_type=#{fuel_type_url}&zip=#{user.zip}&api_key=#{ENV['API_KEY']}"
         doc = HTTParty.get(url)
         data = doc.parsed_response
         #return stations 
