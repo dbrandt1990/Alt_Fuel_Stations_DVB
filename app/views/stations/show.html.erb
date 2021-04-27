@@ -8,18 +8,18 @@
 
    <p>Notes:</p>
    <ul id="notes">
-   <% if @station.notes.empty? %>
-        <li>
-            <p>There are no notes for this station</p>
-        </li>
-   <% else %>
    <% @station.notes.each do |n| %>
         <li>
-            <p> <%= n.content %> </p>
+            <p> <%= n.content %>  <%= link_to "remove", "/notes/#{n.id}/delete"%> </p>
         </li>
-        <% end %>
    <% end %>
    </ul>
+   
+ <%= form_tag('/notes') %>
+ <%= hidden_field :note, :station_id, :value => @station.id %>
+ <%= text_area_tag :content %>
+ <%= submit_tag "Add Note" %>
+
    <% if admin?%>
         <%= link_to "Delete", "/stations/#{@station.id}/delete", :style => 'color:red;' %>
    <% end %>

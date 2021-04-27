@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 
   get '/stations/:id/delete' => 'stations#destroy' #for admin only
 
+  get '/notes/:id/delete' => 'notes#destroy'
+
   resources :users
   resources :stations
   resources :notes
