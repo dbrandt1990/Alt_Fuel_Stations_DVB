@@ -19,9 +19,6 @@ class SessionsController < ApplicationController
 
           session[:user_id] = @user.id
 
-          #makes api call to generate all stations for user's given zip
-          ApiController.create_station_objects(@user)
-
           redirect_to user_path(@user)
         end
     end

@@ -11,6 +11,8 @@ class StationsController < ApplicationController
     end
 
     def destroy
-
+        station = Station.find_by(id: params[:id])
+        station.destroy
+        redirect_to user_path(current_user)
     end
 end

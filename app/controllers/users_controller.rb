@@ -9,7 +9,10 @@ class UsersController < ApplicationController
 
         if @user.save
             session[:user_id] = @user.id
-            #create users_stations with zip and associated settings
+
+        #makes api call to generate all stations for user's given zip
+            ApiController.create_station_objects(@user, ApiController.get_stations_in_zip(@user))
+
             redirect_to user_path(@user)
         else
             render new_user_path
@@ -29,6 +32,7 @@ class UsersController < ApplicationController
 
     def update_settings
         current_user.update(settings_params)
+        ApiController.create_station_objects(current_user, ApiController.get_stations_with_fuel_types(current_user))
         redirect_to user_path(current_user.id)
     end
 

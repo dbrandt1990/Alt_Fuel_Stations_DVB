@@ -4,7 +4,6 @@
    <p>City: <%= @station.city %></p>
    <p>State: <%= @station.state %></p>
    <p>Zip: <%= @station.zip %></p>
-   <p>Access: <%= @station.access.capitalize %></p>
    <p>Status: <%= @station.status %></p><br>
 
    <p>Notes:</p>
@@ -21,4 +20,7 @@
         <% end %>
    <% end %>
    </ul>
+   <% if admin?%>
+        <%= link_to "Delete", "/stations/#{@station.id}/delete", :style => 'color:red;' %>
+   <% end %>
 </div>

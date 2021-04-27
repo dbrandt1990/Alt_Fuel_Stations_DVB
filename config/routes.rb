@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 
   get '/logout' => 'sessions#destroy'
 
+  get '/stations/:id/delete' => 'stations#destroy' #for admin only
+
   resources :users
   resources :stations
   resources :notes
