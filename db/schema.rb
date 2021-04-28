@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_27_214251) do
+ActiveRecord::Schema.define(version: 2021_04_28_021705) do
 
   create_table "notes", force: :cascade do |t|
     t.text "content"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2021_04_27_214251) do
     t.string "city"
     t.string "state"
     t.integer "api_id"
+    t.string "phone", default: "N/A"
   end
 
   create_table "users", force: :cascade do |t|

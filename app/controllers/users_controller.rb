@@ -11,7 +11,7 @@ class UsersController < ApplicationController
         if @user.save
             session[:user_id] = @user.id
 
-        #makes api call to generate all stations for user's given zip
+            #makes api call to generate all stations for user's given zip
             ApiController.create_station_objects(@user, ApiController.get_stations_in_zip(@user))
 
             redirect_to user_path(@user)
@@ -22,8 +22,12 @@ class UsersController < ApplicationController
 
     def show
         @user = current_user
-        @stations = @user.stations
-
+        @stations = []
+        @user.stations.collect do |s| 
+           if check_settings(s, @user)
+                @stations << s
+           end
+        end
     end
 
     def settings
@@ -31,14 +35,26 @@ class UsersController < ApplicationController
         render '/users/settings'
     end
 
+    def check_settings(station, user)
+       if (station.zip == user.zip && 
+           station.ELEC == user.ELEC && 
+           station.BD == user.BD && 
+           station.CNG == user.CNG && 
+           station.LPG == user.LPG && 
+           station.LNG == user.LNG && 
+           station.HY == user.HY && 
+           station.E85 == user.E85)
+        true
+       else 
+        false
+       end
+    end
+
     def update_settings
         current_user.update(settings_params)
-        #remove all stations that do not meet the users settings
-        current_user.stations.each do |s|
-            s.destroy
-        end
 
-        ApiController.create_station_objects(current_user, ApiController.get_stations_with_fuel_types(current_user))
+        ApiController.create_station_objects(current_user, ApiController.get_stations_from_settings(current_user))
+
         redirect_to user_path(current_user.id)
     end
 

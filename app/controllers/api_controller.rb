@@ -23,7 +23,7 @@ module ApiController
         data["fuel_stations"]
     end
 
-    def self.get_stations_with_fuel_types(user)
+    def self.get_stations_from_settings(user)
         users_fuel_types = {
           ELEC: user.ELEC,
           BD: user.BD,
@@ -71,18 +71,40 @@ module ApiController
             zip = station["zip"]
             access = station["access_code"]
             api_id = station["id"]
+            phone = station["station_phone"]
 
             outlets = station["ev_connector_types"]
             #build station through user only if they do not already have it.
-            if user.stations.find_by(api_id: api_id).nil?
-             
-                station = user.stations.build(name: name, address: address, city: city, state: state, zip: zip, status: status, access: access, api_id: api_id)
+            if user.stations.find_by(api_id: api_id).nil? && Station.find_by(api_id: api_id).nil?
+
+                #byebug #!getting multiple of the same id after update settings
+                user_station = user.stations.build
+                    (name: name,
+                    address: address, 
+                    city: city,
+                    state: state,
+                    zip: zip, 
+                    status: status, 
+                    access: access, 
+                    api_id: api_id, 
+                    phone: phone
+                    #fuel_types
+                    ELEC: user.ELEC,
+                    BD: user.BD,
+                    CNG: user.CNG
+                    LPG: user.LPG
+                    LNG: user.LNG
+                    HY: user.HY
+                    E85:user.E85
+                )
                 #set outlets for station
                 outlets.each do |outlet|
-                    station.update(outlet.to_sym => true)
+                    user_station.update(outlet.to_sym => true)
                 end
 
-                station.save
+                user_station.save
+            elsif Station.find_by(api_id: api_id)
+                user.stations << Station.find_by(api_id: api_id)
             end
         end
     end
