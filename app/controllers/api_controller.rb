@@ -41,64 +41,64 @@ module ApiController
 
     #use appropriate api get method
     def self.create_station_objects(user, method)
-        method.each do |station|
+        #ONLy make api call if user and DB don't have station already
+        if user.stations.find_by(zip: user.zip).nil? && Station.find_by(zip: user.zip).nil?
 
-            name = station["station_name"]
+            method.each do |station|
 
-            if station["status_code"] == "E"
-                status = "Availible"
-            elsif station["status_code"] == "P"
-                status = "Planned for Construction"
-            else
-                status = "Temporarily Unavailible"
-            end
-            
-            address = station["street_address"] 
-            city = station["city"]
-            state = station["state"]
-            zip = station["zip"]
-            access = station["access_code"]
-            api_id = station["id"]
-            phone = station["station_phone"]
-            fuel_type_code = station["fuel_type_code"]
-      
+                name = station["station_name"]
 
-            outlets = station["ev_connector_types"]
-            #build station through user only if they do not already have it.
-            if user.stations.find_by(api_id: api_id).nil? && Station.find_by(api_id: api_id).nil?
-
-                #byebug #!getting multiple of the same id after update settings
-                user_station = user.stations.build(
-                    name: name,
-                    address: address, 
-                    city: city,
-                    state: state,
-                    zip: zip, 
-                    status: status, 
-                    access: access, 
-                    api_id: api_id, 
-                    phone: phone,
-                )
-                #set outlets and fuel types for station
-                if !outlets.empty?
-                    outlets.each do |outlet|
-                        user_station.update(outlet.to_sym => true)
-                    end
+                if station["status_code"] == "E"
+                    status = "Availible"
+                elsif station["status_code"] == "P"
+                    status = "Planned for Construction"
+                else
+                    status = "Temporarily Unavailible"
                 end
 
-                if fuel_type_code.is_a?(Array)
-                    fuel_type_code.each do |f|
-                        user_station.update(f.to_sym => true)
+                address = station["street_address"] 
+                city = station["city"]
+                state = station["state"]
+                zip = station["zip"]
+                access = station["access_code"]
+                api_id = station["id"]
+                phone = station["station_phone"]
+                fuel_type_code = station["fuel_type_code"]
+            
+
+                outlets = station["ev_connector_types"]
+
+                    user_station = user.stations.build(
+                        name: name,
+                        address: address, 
+                        city: city,
+                        state: state,
+                        zip: zip, 
+                        status: status, 
+                        access: access, 
+                        api_id: api_id, 
+                        phone: phone,
+                    )
+                    #set outlets and fuel types for station
+                    if !outlets.empty?
+                        outlets.each do |outlet|
+                            user_station.update(outlet.to_sym => true)
+                        end
                     end
-                else
-                    user_station.update(fuel_type_code.to_sym => true)
-                end 
 
-                user_station.save
+                    if fuel_type_code.is_a?(Array)
+                        fuel_type_code.each do |f|
+                            user_station.update(f.to_sym => true)
+                        end
+                    else
+                        user_station.update(fuel_type_code.to_sym => true)
+                    end 
 
-            elsif Station.find_by(api_id: api_id)
-                user.stations << Station.find_by(api_id: api_id)
-            end
+                    user_station.save
+                end   
+        #add station from DB if user doesn't have
+        elsif user.stations.find_by(zip: user.zip).nil? && Station.find_by(zip: user.zip)
+            user.stations << Station.where(zip: user.zip)
         end
     end
 

@@ -11,7 +11,7 @@ class UsersController < ApplicationController
         if @user.save
             session[:user_id] = @user.id
 
-            #makes api call to generate all stations for user's given zip
+            #makes api call to generate all stations for user's given zip OR get them from DB if they already exisit for another user
             ApiController.create_station_objects(@user, ApiController.get_stations_in_zip(@user))
 
             redirect_to user_path(@user)
