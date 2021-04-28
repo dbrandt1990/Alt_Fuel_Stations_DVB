@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-    #? Maybe add a dictionary for outlet and fuel types
     helper_method :current_user, :loggedin?, :admin?
 
     def current_user

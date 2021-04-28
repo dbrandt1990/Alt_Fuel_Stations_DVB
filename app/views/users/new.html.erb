@@ -10,7 +10,9 @@
     <%= f.label :zip %><br>
     <%= f.text_field :zip %><br>
 
+   
     <%= f.label :email %><br>
+    <%= @user.errors.full_messages.first if @user.errors.any? %>
     <%= f.email_field :email %><br>
 
     <%= f.label :password %><br>

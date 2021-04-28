@@ -11,7 +11,13 @@
    <ul id="notes">
    <% @station.notes.each do |n| %>
         <li>
-            <p> <%= n.content %>  <%= link_to "remove", "/notes/#{n.id}/delete"%> </p>
+            <p> <%= n.content %>  
+            <% if n.user ==  current_user%>
+               <%= link_to "remove", "/notes/#{n.id}/delete" %>
+               <% else %>
+               <%= "created by: #{n.user.name}" %>
+            <% end %>
+            </p>
         </li>
    <% end %>
    </ul>
