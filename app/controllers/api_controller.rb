@@ -3,18 +3,6 @@ require 'httparty'
 module ApiController 
     include HTTParty
 
-    def self.check_if_stations_exist_in_db(get_stations)
-        stations_to_add = []
-        get_stations.each do |s|
-            if Station.find_by(api_id: s.api_id).nil?
-                stations_to_add << s
-            end
-        end 
-        #!if they exist don't add them, but associate them with the user trying to access them
-        byebug
-        stations_to_add
-    end
-
     def self.get_stations_in_zip(user)
         user_zip = user.zip
         url = "https://developer.nrel.gov/api/alt-fuel-stations/v1.json?zip=#{user_zip}&api_key=#{ENV['API_KEY']}"
@@ -51,7 +39,7 @@ module ApiController
     end
 
 
-    #take method as an argument 
+    #use appropriate api get method
     def self.create_station_objects(user, method)
         method.each do |station|
 
@@ -72,14 +60,16 @@ module ApiController
             access = station["access_code"]
             api_id = station["id"]
             phone = station["station_phone"]
+            fuel_type_code = station["fuel_type_code"]
+      
 
             outlets = station["ev_connector_types"]
             #build station through user only if they do not already have it.
             if user.stations.find_by(api_id: api_id).nil? && Station.find_by(api_id: api_id).nil?
 
                 #byebug #!getting multiple of the same id after update settings
-                user_station = user.stations.build
-                    (name: name,
+                user_station = user.stations.build(
+                    name: name,
                     address: address, 
                     city: city,
                     state: state,
@@ -87,22 +77,25 @@ module ApiController
                     status: status, 
                     access: access, 
                     api_id: api_id, 
-                    phone: phone
-                    #fuel_types
-                    ELEC: user.ELEC,
-                    BD: user.BD,
-                    CNG: user.CNG
-                    LPG: user.LPG
-                    LNG: user.LNG
-                    HY: user.HY
-                    E85:user.E85
+                    phone: phone,
                 )
-                #set outlets for station
-                outlets.each do |outlet|
-                    user_station.update(outlet.to_sym => true)
+                #set outlets and fuel types for station
+                if !outlets.empty?
+                    outlets.each do |outlet|
+                        user_station.update(outlet.to_sym => true)
+                    end
                 end
 
+                if fuel_type_code.is_a?(Array)
+                    fuel_type_code.each do |f|
+                        user_station.update(f.to_sym => true)
+                    end
+                else
+                    user_station.update(fuel_type_code.to_sym => true)
+                end 
+
                 user_station.save
+
             elsif Station.find_by(api_id: api_id)
                 user.stations << Station.find_by(api_id: api_id)
             end

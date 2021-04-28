@@ -23,10 +23,10 @@ class UsersController < ApplicationController
     def show
         @user = current_user
         @stations = []
-        @user.stations.collect do |s| 
-           if check_settings(s, @user)
+        @user.stations.each do |s|
+            if check_settings(s,@user)
                 @stations << s
-           end
+            end
         end
     end
 
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
     end
 
     def check_settings(station, user)
-       if (station.zip == user.zip && 
+       if (station.zip == user.zip &&
            station.ELEC == user.ELEC && 
            station.BD == user.BD && 
            station.CNG == user.CNG && 
