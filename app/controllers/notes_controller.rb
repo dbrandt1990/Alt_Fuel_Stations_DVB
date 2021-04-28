@@ -8,7 +8,7 @@ class NotesController < ApplicationController
     def destroy
         note = Note.find(params[:id])
         station = Station.find(note.station_id)
-        note.destroy
+        note.destroy unless note.admin
         redirect_to station_path(station)
     end
 

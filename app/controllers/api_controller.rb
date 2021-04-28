@@ -3,13 +3,23 @@ require 'httparty'
 module ApiController 
     include HTTParty
 
+    def self.check_if_stations_exist_in_db(get_stations)
+        stations_to_add = []
+        get_stations.each do |s|
+            if Station.find_by(api_id: s.api_id).nil?
+                stations_to_add << s
+            end
+        end 
+        #!if they exist don't add them, but associate them with the user trying to access them
+        byebug
+        stations_to_add
+    end
+
     def self.get_stations_in_zip(user)
         user_zip = user.zip
-        #apikey not hidden
         url = "https://developer.nrel.gov/api/alt-fuel-stations/v1.json?zip=#{user_zip}&api_key=#{ENV['API_KEY']}"
         doc = HTTParty.get(url)
         data = doc.parsed_response
-        #return stations 
         data["fuel_stations"]
     end
 
@@ -34,11 +44,9 @@ module ApiController
 
         fuel_type_url = fuel_type_url.join(',')
        
-        #apikey not hidden
         url = "https://developer.nrel.gov/api/alt-fuel-stations/v1.json?fuel_type=#{fuel_type_url}&zip=#{user.zip}&api_key=#{ENV['API_KEY']}"
         doc = HTTParty.get(url)
         data = doc.parsed_response
-        #return stations 
         data["fuel_stations"]
     end
 
@@ -62,16 +70,20 @@ module ApiController
             state = station["state"]
             zip = station["zip"]
             access = station["access_code"]
+            api_id = station["id"]
 
             outlets = station["ev_connector_types"]
+            #build station through user only if they do not already have it.
+            if user.stations.find_by(api_id: api_id).nil?
              
-            station = user.stations.build(name: name, address: address, city: city, state: state, zip: zip, status: status, access: access)
-            #set outlets for and fuel types for station
-            outlets.each do |outlet|
-                station.update(outlet.to_sym => true)
+                station = user.stations.build(name: name, address: address, city: city, state: state, zip: zip, status: status, access: access, api_id: api_id)
+                #set outlets for station
+                outlets.each do |outlet|
+                    station.update(outlet.to_sym => true)
+                end
+
+                station.save
             end
-            
-            station.save
         end
     end
 

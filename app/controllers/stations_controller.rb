@@ -7,7 +7,7 @@ class StationsController < ApplicationController
     end
 
     def update
-
+      
     end
 
     def destroy
