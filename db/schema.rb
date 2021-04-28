@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_28_021705) do
+ActiveRecord::Schema.define(version: 2021_04_28_174419) do
 
   create_table "notes", force: :cascade do |t|
     t.text "content"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 2021_04_28_021705) do
     t.boolean "admin", default: false
     t.boolean "BD", default: false
     t.boolean "CNG", default: false
-    t.boolean "ELEC", default: false
+    t.boolean "ELEC", default: true
     t.boolean "E85", default: false
     t.boolean "HY", default: false
     t.boolean "LNG", default: false
