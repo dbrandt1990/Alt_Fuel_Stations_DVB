@@ -26,17 +26,32 @@ class StationsController < ApplicationController
     def check_for_updates
         current_stations = Station.where(zip: current_user.zip)
         new_stations = ApiController.get_stations_from_zip(current_user.zip)
-
+    
         if current_stations.count != new_stations.count
-            new_stations.each do |s|
-                #use id for new_stations, and api_id for stations in the DB
-                if current_stations.find_by(api_id: s.id).nil?
-                    Station.create(s)
-                    flash[:alert] = "There are Updates in your zip"
+            if new_stations.count < current_stations.count
+                current_stations.each do |station|
+                    
+                    if !new_stations.select{|s| s['id'] == station.api_id}.any?
+                        @message = "#{station.name}, has been removed."
+                        station.destroy
+                        render "/stations/check_for_updates"
+                    end
+                end
+            elsif new_stations.count > current_stations.count
+                new_stations.each do |station|
+                    #use ['id'] for new_stations, and api_id for stations in the DB
+                    if current_stations.find_by(api_id: station['id']).nil?
+                        #!does this new staion populate the users show page, or do we need to do more here?
+                        @message = "#{station['name']}, has been added in your area!."
+                        ApiController.create_station(station)
+                        render "/stations/check_for_updates"
+                    end
                 end
             end
+        else
+            @message = "No updates in your home zip."
+            render "/stations/check_for_updates"
         end
-        flash[:alert] = "No Updates"
-        redirect_to user_path(current_user)
     end
+
 end

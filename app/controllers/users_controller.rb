@@ -23,7 +23,7 @@ class UsersController < ApplicationController
         @user = current_user
         stations = Station.where(zip: @user.zip)
         @stations = []
-
+        
         stations.each do |s|
             if check_settings(s,@user)
                 @stations << s
