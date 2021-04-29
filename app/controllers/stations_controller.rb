@@ -32,9 +32,7 @@ class StationsController < ApplicationController
                 #use id for new_stations, and api_id for stations in the DB
                 if current_stations.find_by(api_id: s.id).nil?
                     Station.create(s)
-                    current_user.update(updates: true)
-                else
-                    current_user.update(updates: false)
+                    flash[:alert] = "There are Updates in your zip"
                 end
             end
         end

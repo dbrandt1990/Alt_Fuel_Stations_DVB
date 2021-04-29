@@ -1,5 +1,5 @@
 <h1>Welcome, <%= @user.name %>!</h1>
-<h4> You have <%= @stations.count %> stations in your zip. <%= @user.updates?%></h4>
+<h4> You have <%= @stations.count %> stations in your zip.</h4>
 <%= link_to "Show all #{@user.name}'s stations", "/users/#{@user.id}/stations" %>
 
 <%= link_to "Check for Updates", "/stations/updated"%>
