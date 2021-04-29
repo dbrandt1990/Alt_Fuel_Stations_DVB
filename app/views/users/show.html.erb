@@ -24,6 +24,7 @@
            <%= link_to "Show #{s.name}", "/stations/#{s.id}"%>
         </td>
         <td>
+        <!---show add only if user doesn't already have station saved--->
            <%= link_to "Add", "/users/#{current_user.id}/stations/#{s.id}"%>
         </td>
     </tr>
