@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_29_041051) do
+ActiveRecord::Schema.define(version: 2021_04_29_172421) do
 
   create_table "notes", force: :cascade do |t|
     t.text "content"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2021_04_29_041051) do
     t.string "zip"
     t.string "status"
     t.string "access"
+    #!maybe remove updates and flagged, unless going to check agains address and access for station specific updates
     t.boolean "updates", default: false
     t.boolean "flagged", default: false
     t.boolean "NEMA1450", default: false
@@ -58,7 +59,6 @@ ActiveRecord::Schema.define(version: 2021_04_29_041051) do
     t.string "email"
     t.string "password_digest"
     t.string "zip"
-    t.boolean "admin", default: false
     t.boolean "BD", default: false
     t.boolean "CNG", default: false
     t.boolean "ELEC", default: true

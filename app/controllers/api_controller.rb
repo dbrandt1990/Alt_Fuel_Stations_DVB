@@ -3,7 +3,6 @@ require 'httparty'
 module ApiController
     include HTTParty
 
-
     def self.get_stations_from_zip(zip)
         zip_code = zip
         url = "https://developer.nrel.gov/api/alt-fuel-stations/v1.json?zip=#{zip_code}&api_key=#{ENV['API_KEY']}"
@@ -65,18 +64,18 @@ module ApiController
     end
 
     #use appropriate api get method
-    def self.create_station_objects(user, method)
+    def self.create_station_objects(zip, method)
         #array to return stations found.
         stations = []
         #ONLy make api call if user and DB don't have station already
-        if Station.find_by(zip: user.zip).nil?
+        if Station.find_by(zip: zip).nil?
 
             method.each do |station|
                 ApiController.create_station(station)
             end   
         #add station from DB if user doesn't have
         else 
-            stations = Station.where(zip: user.zip)
+            stations = Station.where(zip: zip)
         end
         stations
     end

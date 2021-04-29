@@ -5,6 +5,9 @@ Rails.application.routes.draw do
 
   root 'sessions#new'
 
+  #Oauth
+  match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
+
   get '/signup' => 'users#new'
   post '/signup' => 'users#create'
 
@@ -27,6 +30,11 @@ Rails.application.routes.draw do
 
   #check is stations in zip have changed
   get '/stations/updated' => 'stations#check_for_updates'
+
+
+  get '/stations/search_form' => 'stations#search_form'
+  get '/stations/search' => 'stations#search'
+
 
   resources :users
   resources :stations

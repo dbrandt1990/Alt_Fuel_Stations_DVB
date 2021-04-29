@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+    skip_before_action :verify_authenticity_token, only: :create
     extend ApiController
 
     def new
@@ -10,16 +11,22 @@ class SessionsController < ApplicationController
     end
 
     def create
-        @user = User.find_by(email: params[:email])
-       
-        if @user.nil?
-          redirect_to new_user_path, alert: 'No user found, please sign up'
+        if auth_hash = request.env['omniauth.auth']['email']
+              user = User.find_or_create_by_omniauth(auth_hash)
+              session[:user_id] = user.id
+              redirect_to user_path(@user)
         else
-          return head(:forbidden) unless @user.authenticate(params[:password])
+            @user = User.find_by(email: params[:email])
+    
+            if @user.nil?
+              redirect_to new_user_path, alert: 'No user found, please sign up'
+            else
+              return head(:forbidden) unless @user.authenticate(params[:password])
 
-          session[:user_id] = @user.id
+              session[:user_id] = @user.id
 
-          redirect_to user_path(@user)
+              redirect_to user_path(@user)
+            end
         end
     end
 

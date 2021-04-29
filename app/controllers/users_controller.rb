@@ -11,7 +11,7 @@ class UsersController < ApplicationController
         if @user.save
             session[:user_id] = @user.id
 
-            ApiController.create_station_objects(@user, ApiController.get_stations_from_zip(@user.zip))
+            ApiController.create_station_objects(@user.zip, ApiController.get_stations_from_zip(@user.zip))
 
             redirect_to user_path(@user)
         else
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
         @user = current_user
         stations = Station.where(zip: @user.zip)
         @stations = []
-        
+
         stations.each do |s|
             if check_settings(s,@user)
                 @stations << s
@@ -32,7 +32,8 @@ class UsersController < ApplicationController
 
         @stations
     end
-#show all users stations
+
+    #show all users stations
     def users_stations
         @user = current_user
         @stations = @user.stations
@@ -53,17 +54,16 @@ class UsersController < ApplicationController
            station.LNG == user.LNG && 
            station.HY == user.HY && 
            station.E85 == user.E85)
-
-        true
+            true
        else 
-        false
+            false
        end
     end
 
     def update_settings
         current_user.update(settings_params)
 
-        ApiController.create_station_objects(current_user, ApiController.get_stations_from_zip(current_user.zip))
+        ApiController.create_station_objects(current_user.zip, ApiController.get_stations_from_zip(current_user.zip))
 
         redirect_to user_path(current_user.id)
     end

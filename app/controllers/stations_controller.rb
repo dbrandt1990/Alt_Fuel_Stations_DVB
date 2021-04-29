@@ -23,6 +23,24 @@ class StationsController < ApplicationController
         redirect_to "/users/#{current_user.id}/stations"
     end
 
+    def search_form
+        @stations = []
+        render '/stations/search'
+    end
+
+    def search
+        @stations = Station.all
+        stations_in_db = Station.where(zip: params[:zip])
+
+        if stations_in_db.any?
+            @stations = stations_in_db
+            render '/stations/search'
+        else
+           @stations = ApiController.create_station_objects(params[:zip], ApiController.get_stations_from_zip(params[:zip]))
+           render '/stations/search'
+        end
+    end
+
     def check_for_updates
         #use ['id'] for new_stations, and api_id for stations in the DB
         current_stations = Station.where(zip: current_user.zip)
