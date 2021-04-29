@@ -19,7 +19,6 @@ class SessionsController < ApplicationController
 
           session[:user_id] = @user.id
 
-          #add check for updated stations ie. new addresses, or repeated addresses
           redirect_to user_path(@user)
         end
     end

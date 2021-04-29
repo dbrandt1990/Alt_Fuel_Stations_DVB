@@ -6,13 +6,15 @@ class StationsController < ApplicationController
         render '/stations/show'
     end
 
-    def update
-      
+    def add_user
+        station = Station.find(params[:id])
+        station.users << current_user
+        redirect_to "/users/#{current_user.id}/stations"
     end
-
+#!changed to try and remove from users stations instead of Stations
     def destroy
-        station = Station.find_by(id: params[:id])
+        station = current_user.stations.find_by(id: params[:id])
         station.destroy
-        redirect_to user_path(current_user)
+        redirect_to "/users/#{current_user.id}/stations"
     end
 end

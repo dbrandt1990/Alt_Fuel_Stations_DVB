@@ -28,7 +28,6 @@
  <%= text_area_tag :content %>
  <%= submit_tag "Add Note" %>
 
-   <% if admin?%>
-        <%= link_to "Delete Station", "/stations/#{@station.id}/delete", :style => 'color:red;' %>
-   <% end %>
+<%= link_to "Remove Station", "/users/#{current_user.id}/stations/#{@station.id}/delete", :style => 'color:red;' %>
+   
 </div>

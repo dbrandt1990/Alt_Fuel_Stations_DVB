@@ -1,13 +1,12 @@
 <h1>Welcome, <%= @user.name %>!</h1>
-<h4> You have <%= @stations.count %> stations in your zip. <%= @user.updates?%></h4>
-<%= link_to "Show all #{@user.name}'s stations", "/users/#{@user.id}/stations" %>
+<h4> You have <%= @stations.count %> stations saved.<%= @user.updates?%></h4>
+<%= link_to "Show stations near #{@user.name}", user_path(@user) %>
 <table>
   <tr>
     <th>Name</th>
     <th>Address</th>
     <th>Access</th>
     <th>Link</th>
-    <th>Add Station</th>
   </tr>
   <% @stations.each do |s|%>
     <tr>
@@ -22,9 +21,6 @@
         </td>
         <td>
            <%= link_to "Show #{s.name}", "/stations/#{s.id}"%>
-        </td>
-        <td>
-           <%= link_to "Add", "/users/#{current_user.id}/stations/#{s.id}"%>
         </td>
     </tr>
   <% end %>
