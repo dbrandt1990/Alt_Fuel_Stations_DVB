@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   #display stations that belong to user
   get '/users/:id/stations' => 'users#users_stations'
 
+  #check is stations in zip have changed
+  get '/stations/updated' => 'stations#check_for_updates'
+
   resources :users
   resources :stations
   resources :notes

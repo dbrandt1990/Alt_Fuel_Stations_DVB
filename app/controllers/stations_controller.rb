@@ -24,7 +24,7 @@ class StationsController < ApplicationController
     end
 
     def check_for_updates
-        current_stations = Station.find_by(zip: current_user.zip)
+        current_stations = Station.where(zip: current_user.zip)
         new_stations = ApiController.get_stations_from_zip(current_user.zip)
 
         if current_stations.count != new_stations.count
@@ -38,5 +38,7 @@ class StationsController < ApplicationController
                 end
             end
         end
+        flash[:alert] = "No Updates"
+        redirect_to user_path(current_user)
     end
 end
