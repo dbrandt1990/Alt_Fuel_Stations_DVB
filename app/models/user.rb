@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
     def updates?
         if self.updates 
-            "NEW station added to your zip!"
+            "There has been an UPDATE to stations in your zip!"
         end
     end
 end

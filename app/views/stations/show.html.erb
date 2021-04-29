@@ -22,13 +22,13 @@
    <% end %>
    </ul>
    
- <%= form_tag('/notes') %>
- <%= hidden_field :note, :station_id, :value => @station.id %>
- <!---make delete note availible only for current users notes, otherwise display username who posted-->
- <%= text_area_tag :content %>
- <%= submit_tag "Add Note" %>
-<% if @station.users.find_by(id: current_user.id) %>
-   <%= link_to "Remove Station", "/users/#{current_user.id}/stations/#{@station.id}/delete", :style => 'color:red;' %>
-<% end %>
+   <%= form_tag('/notes') %>
+   <%= hidden_field :note, :station_id, :value => @station.id %>
+   <%= text_area_tag :content %>
+   <%= submit_tag "Add Note" %>
+   
+   <% if @station.users.find_by(id: current_user.id) %>
+      <%= link_to "Remove Station", "/users/#{current_user.id}/stations/#{@station.id}/delete", :style => 'color:red;' %>
+   <% end %>
    
 </div>

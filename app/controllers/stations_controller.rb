@@ -22,4 +22,21 @@ class StationsController < ApplicationController
         current_user.stations.delete(Station.find_by(id: params[:id]))
         redirect_to "/users/#{current_user.id}/stations"
     end
+
+    def check_for_updates
+        current_stations = Station.find_by(zip: current_user.zip)
+        new_stations = ApiController.get_stations_from_zip(current_user.zip)
+
+        if current_stations.count != new_stations.count
+            new_stations.each do |s|
+                #use id for new_stations, and api_id for stations in the DB
+                if current_stations.find_by(api_id: s.id).nil?
+                    Station.create(s)
+                    current_user.update(updates: true)
+                else
+                    current_user.update(updates: false)
+                end
+            end
+        end
+    end
 end

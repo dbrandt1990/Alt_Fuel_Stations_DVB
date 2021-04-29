@@ -12,7 +12,76 @@ module ApiController
         data["fuel_stations"]
     end
 
-    #!may not need this method, just get all in zip and then filter by check_settings in user controller
+    def self.create_station(station)
+        name = station["station_name"]
+
+        if station["status_code"] == "E"
+            status = "Availible"
+        elsif station["status_code"] == "P"
+            status = "Planned for Construction"
+        else
+            status = "Temporarily Unavailible"
+        end
+
+        address = station["street_address"] 
+        city = station["city"]
+        state = station["state"]
+        zip = station["zip"]
+        access = station["access_code"]
+        api_id = station["id"]
+        phone = station["station_phone"]
+        fuel_type_code = station["fuel_type_code"]
+    
+
+        outlets = station["ev_connector_types"]
+
+            station = Station.new(
+                name: name,
+                address: address, 
+                city: city,
+                state: state,
+                zip: zip, 
+                status: status, 
+                access: access, 
+                api_id: api_id, 
+                phone: phone,
+            )
+            #set outlets and fuel types for station
+            if !outlets.empty?
+                outlets.each do |outlet|
+                    station.update(outlet.to_sym => true)
+                end
+            end
+
+            if fuel_type_code.is_a?(Array)
+                fuel_type_code.each do |f|
+                    station.update(f.to_sym => true)
+                end
+            else
+                station.update(fuel_type_code.to_sym => true)
+            end 
+
+            station.save
+    end
+
+    #use appropriate api get method
+    def self.create_station_objects(user, method)
+        #array to return stations found.
+        stations = []
+        #ONLy make api call if user and DB don't have station already
+        if Station.find_by(zip: user.zip).nil?
+
+            method.each do |station|
+                ApiController.create_station(station)
+            end   
+        #add station from DB if user doesn't have
+        else 
+            stations = Station.where(zip: user.zip)
+        end
+        stations
+    end
+
+        #!may not need this method, just get all in zip and then filter by check_settings in user controller
     # def self.get_stations_from_settings(user)
     #     users_fuel_types = {
     #       ELEC: user.ELEC,
@@ -39,72 +108,5 @@ module ApiController
     #     data = doc.parsed_response
     #     data["fuel_stations"]
     # end
-
-
-    #use appropriate api get method
-    def self.create_station_objects(user, method)
-        #array to return stations found.
-        stations = []
-        #ONLy make api call if user and DB don't have station already
-        if Station.find_by(zip: user.zip).nil?
-
-            method.each do |station|
-
-                name = station["station_name"]
-
-                if station["status_code"] == "E"
-                    status = "Availible"
-                elsif station["status_code"] == "P"
-                    status = "Planned for Construction"
-                else
-                    status = "Temporarily Unavailible"
-                end
-
-                address = station["street_address"] 
-                city = station["city"]
-                state = station["state"]
-                zip = station["zip"]
-                access = station["access_code"]
-                api_id = station["id"]
-                phone = station["station_phone"]
-                fuel_type_code = station["fuel_type_code"]
-            
-
-                outlets = station["ev_connector_types"]
-
-                    station = Station.new(
-                        name: name,
-                        address: address, 
-                        city: city,
-                        state: state,
-                        zip: zip, 
-                        status: status, 
-                        access: access, 
-                        api_id: api_id, 
-                        phone: phone,
-                    )
-                    #set outlets and fuel types for station
-                    if !outlets.empty?
-                        outlets.each do |outlet|
-                            station.update(outlet.to_sym => true)
-                        end
-                    end
-
-                    if fuel_type_code.is_a?(Array)
-                        fuel_type_code.each do |f|
-                            station.update(f.to_sym => true)
-                        end
-                    else
-                        station.update(fuel_type_code.to_sym => true)
-                    end 
-
-                    station.save
-                end   
-        #add station from DB if user doesn't have
-            else 
-            stations = Station.where(zip: user.zip)
-        end
-        stations
-    end
 
 end

@@ -11,7 +11,6 @@ class UsersController < ApplicationController
         if @user.save
             session[:user_id] = @user.id
 
-            #makes api call to generate all stations for user's given zip OR get them from DB if they already exisit for another user
             ApiController.create_station_objects(@user, ApiController.get_stations_from_zip(@user.zip))
 
             redirect_to user_path(@user)
@@ -24,18 +23,19 @@ class UsersController < ApplicationController
         @user = current_user
         stations = Station.where(zip: @user.zip)
         @stations = []
+
         stations.each do |s|
             if check_settings(s,@user)
                 @stations << s
             end
         end
+
         @stations
     end
 #show all users stations
     def users_stations
         @user = current_user
         @stations = @user.stations
-        # @stations = stations.uniq
         render '/users/users_stations'
     end
 
@@ -53,7 +53,7 @@ class UsersController < ApplicationController
            station.LNG == user.LNG && 
            station.HY == user.HY && 
            station.E85 == user.E85)
-           
+
         true
        else 
         false
