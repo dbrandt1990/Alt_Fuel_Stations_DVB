@@ -11,17 +11,18 @@ Rails.application.routes.draw do
   get '/login' => 'sessions#new'
   post '/login' => 'sessions#create'
 
-  get '/users/:id/settings' => 'users#settings', as: 'settings'
+  get '/users/:id/settings' => 'users#settings'
   post '/users/:id/settings' => 'users#update_settings'
 
   get '/logout' => 'sessions#destroy'
 
-  get '/users/:user_id/stations/:id/delete' => 'stations#destroy' #!changed to try and remove from users stations instead of Stations
-
+  #add and remove associations of user to station
+  get '/users/:user_id/stations/:id/delete' => 'stations#delete_user' 
   get '/users/:user_id/stations/:id' => 'stations#add_user'
 
   get '/notes/:id/delete' => 'notes#destroy'
 
+  #display stations that belong to user
   get '/users/:id/stations' => 'users#users_stations'
 
   resources :users

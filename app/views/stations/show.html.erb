@@ -12,7 +12,7 @@
    <% @station.notes.each do |n| %>
         <li>
             <p> <%= n.content %>  
-            <% if n.user ==  current_user%>
+            <% if n.user ==  current_user %>
                <%= link_to "remove", "/notes/#{n.id}/delete" %>
                <% else %>
                <%= "created by: #{n.user.name}" %>
@@ -27,7 +27,8 @@
  <!---make delete note availible only for current users notes, otherwise display username who posted-->
  <%= text_area_tag :content %>
  <%= submit_tag "Add Note" %>
-
-<%= link_to "Remove Station", "/users/#{current_user.id}/stations/#{@station.id}/delete", :style => 'color:red;' %>
+<% if @station.users.find_by(id: current_user.id) %>
+   <%= link_to "Remove Station", "/users/#{current_user.id}/stations/#{@station.id}/delete", :style => 'color:red;' %>
+<% end %>
    
 </div>

@@ -17,8 +17,8 @@ class StationsController < ApplicationController
             redirect_to user_path(current_user)
         end
     end
-#!changed to try and remove from users stations instead of Stations but still deleteing station from db
-    def destroy
+
+    def delete_user
         current_user.stations.delete(Station.find_by(id: params[:id]))
         redirect_to "/users/#{current_user.id}/stations"
     end
