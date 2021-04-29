@@ -24,10 +24,12 @@ class StationsController < ApplicationController
     end
 
     def check_for_updates
+        #use ['id'] for new_stations, and api_id for stations in the DB
         current_stations = Station.where(zip: current_user.zip)
         new_stations = ApiController.get_stations_from_zip(current_user.zip)
     
         if current_stations.count != new_stations.count
+            #station in our DB no longer in API
             if new_stations.count < current_stations.count
                 current_stations.each do |station|
                     
@@ -36,16 +38,18 @@ class StationsController < ApplicationController
                         station.destroy
                         render "/stations/check_for_updates"
                     end
+
                 end
+            #new station found in API
             elsif new_stations.count > current_stations.count
                 new_stations.each do |station|
-                    #use ['id'] for new_stations, and api_id for stations in the DB
+                    
                     if current_stations.find_by(api_id: station['id']).nil?
-                        #!does this new staion populate the users show page, or do we need to do more here?
                         @message = "#{station['name']}, has been added in your area!."
                         ApiController.create_station(station)
                         render "/stations/check_for_updates"
                     end
+
                 end
             end
         else
