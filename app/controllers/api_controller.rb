@@ -12,55 +12,59 @@ module ApiController
     end
 
     def self.create_station(station)
-        name = station["station_name"]
+        if !station.nil?
+            name = station["station_name"]
 
-        if station["status_code"] == "E"
-            status = "Availible"
-        elsif station["status_code"] == "P"
-            status = "Planned for Construction"
-        else
-            status = "Temporarily Unavailible"
-        end
-
-        address = station["street_address"] 
-        city = station["city"]
-        state = station["state"]
-        zip = station["zip"]
-        access = station["access_code"]
-        api_id = station["id"]
-        phone = station["station_phone"]
-        fuel_type_code = station["fuel_type_code"]
-    
-
-        outlets = station["ev_connector_types"]
-
-            station = Station.new(
-                name: name,
-                address: address, 
-                city: city,
-                state: state,
-                zip: zip, 
-                status: status, 
-                access: access, 
-                api_id: api_id, 
-                phone: phone,
-            )
-            #set outlets and fuel types for station
-            if !outlets.empty?
-                outlets.each do |outlet|
-                    station.update(outlet.to_sym => true)
-                end
+            if station["status_code"] == "E"
+                status = "Availible"
+            elsif station["status_code"] == "P"
+                status = "Planned for Construction"
+            else
+                status = "Temporarily Unavailible"
             end
 
-            if fuel_type_code.is_a?(Array)
-                fuel_type_code.each do |f|
-                    station.update(f.to_sym => true)
-                end
-            else
-                station.update(fuel_type_code.to_sym => true)
-            end 
+            address = station["street_address"] 
+            city = station["city"]
+            state = station["state"]
+            zip = station["zip"]
+            access = station["access_code"]
+            api_id = station["id"]
+            phone = station["station_phone"]
+            fuel_type_code = station["fuel_type_code"]
+        
 
-            station.save
+            outlets = station["ev_connector_types"]
+
+                station = Station.new(
+                    name: name,
+                    address: address, 
+                    city: city,
+                    state: state,
+                    zip: zip, 
+                    status: status, 
+                    access: access, 
+                    api_id: api_id, 
+                    phone: phone,
+                )
+                #set outlets and fuel types for station
+                if !outlets.nil?
+                    if !outlets.empty?
+                        outlets.each do |outlet|
+                            station.update(outlet.to_sym => true)
+                        end
+                    end
+                end
+
+                if fuel_type_code.is_a?(Array)
+                    fuel_type_code.each do |f|
+                        station.update(f.to_sym => true)
+                    end
+                else
+                    station.update(fuel_type_code.to_sym => true)
+                end 
+
+                station.save
+        end
     end
 
     #use appropriate api get method

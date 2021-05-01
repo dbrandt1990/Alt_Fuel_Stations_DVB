@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   root 'sessions#new'
 
   #Oauth
-  match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
+  # match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
 
   get '/signup' => 'users#new'
   post '/signup' => 'users#create'

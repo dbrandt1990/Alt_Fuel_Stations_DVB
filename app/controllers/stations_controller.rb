@@ -63,7 +63,7 @@ class StationsController < ApplicationController
                 new_stations.each do |station|
                     
                     if current_stations.find_by(api_id: station['id']).nil?
-                        @message = "#{station['name']}, has been added in your area!."
+                        @message = "#{station['station_name']}, has been added in your area!."
                         ApiController.create_station(station)
                         render "/stations/check_for_updates"
                     end
