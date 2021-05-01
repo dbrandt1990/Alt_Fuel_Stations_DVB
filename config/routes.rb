@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   #Oauth
   # match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
 
+  devise_for :users
+
   get '/signup' => 'users#new'
   post '/signup' => 'users#create'
 

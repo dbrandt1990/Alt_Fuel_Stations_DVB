@@ -61,6 +61,7 @@ gem "httparty", "~> 0.18.1"
 
 gem 'dotenv-rails'
 
+gem 'devise'
 
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth'
