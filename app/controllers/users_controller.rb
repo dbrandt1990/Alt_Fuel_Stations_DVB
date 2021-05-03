@@ -17,12 +17,6 @@ class UsersController < ApplicationController
         @stations
     end
 
-    #show all users stations
-    def users_stations 
-        @stations = current_user.stations
-        render '/users/users_stations'
-    end
-
     def settings
         @user = current_user
         render '/users/settings'

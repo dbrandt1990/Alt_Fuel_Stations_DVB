@@ -1,5 +1,5 @@
 <h1> Search </h1>
-<%= link_to "Show all #{current_user.name}'s stations", "/users/#{current_user.id}/stations" %>
+<%= link_to "Show all #{current_user.name}'s stations", user_stations_path(current_user) %>
 <%= link_to "Check for Updates", "/stations/updated" %>
 <table>
   <tr>
@@ -26,7 +26,7 @@
           </td>
           <td>
           <!---show add only if user doesn't already have station saved--->
-             <%= link_to "Add", "/users/#{current_user.id}/stations/#{s.id}"%>
+             <%= link_to "Add", add_station_path(current_user.id, s.id)%>
           </td>
       </tr>
     <% end %>

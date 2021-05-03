@@ -26,23 +26,21 @@ Rails.application.routes.draw do
   post '/users/:id/settings' => 'users#update_settings'
 
   #add and remove associations of user to station
-  get '/users/:user_id/stations/:id/delete' => 'stations#delete_user' 
-  get '/users/:user_id/stations/:id' => 'stations#add_user'
+  get '/users/:user_id/stations/:id/delete' => 'stations#delete_user', as: 'remove_station'
+  get '/users/:user_id/stations/:id' => 'stations#add_user', as: 'add_station'
 
   get '/notes/:id/delete' => 'notes#destroy'
-
-  #display stations that belong to user
-  get '/users/:id/stations' => 'users#users_stations'
 
   #check is stations in zip have changed
   get '/stations/updated' => 'stations#check_for_updates'
 
-
-  get '/stations/search_form' => 'stations#search_form'
   get '/stations/search' => 'stations#search', as: 'search'
 
 
-  resources :users
-  resources :stations
-  resources :notes
+  resources :users, only: [:new, :create, :edit, :update, :destroy, :show]do
+    resources :stations, only: [:index]
+  end
+  resources :stations, only: [:show] do
+    resources :notes, only: [:create, :destroy]
+  end
 end

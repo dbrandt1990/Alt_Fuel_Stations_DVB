@@ -1,6 +1,11 @@
 require_relative './api_controller.rb'
 
 class StationsController < ApplicationController
+    def index
+        @stations = current_user.stations
+        render '/users/users_stations'
+    end
+
     def show 
         @station = Station.find_by(id:params[:id])
         render '/stations/show'
@@ -23,10 +28,10 @@ class StationsController < ApplicationController
         redirect_to "/users/#{current_user.id}/stations"
     end
 
-    def search_form
-        @stations = []
-        render '/stations/search'
-    end
+    # def search_page
+    #     @stations = []
+    #     render '/stations/search'
+    # end
 
     def search
         @stations = ApiController.create_station_objects(params[:zip], ApiController.get_stations_from_zip(params[:zip]))
