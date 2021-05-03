@@ -17,18 +17,17 @@
           <div class="navbar-header">
 
             <% if user_signed_in? %>
-              <a class="navbar-brand" href="<%= "/users/#{current_user.id}"%>"/>Home</a>
-              <a class="navbar-brand" href="<%= "/users/#{current_user.id}/settings" %>"/>Settings</a>
-              <a class="navbar-brand" href="<%= "/stations/search_form" %>"/>Search Stations</a>
+              <a class="navbar-brand" href="<%= user_path(current_user) %>"/>Home</a>
+              <a class="navbar-brand" href="<%= settings_path(current_user) %>"/>Settings</a>
               <a class="navbar-brand" href="<%= destroy_user_session_path %>"/>Log Out</a>
             <% else %>
               <a class="navbar-brand" href="<%= new_user_session_path %>">Login</a>
               <a class="navbar-brand" href="<%= new_user_registration_path %>">Sign Up</a>
             <% end %>
             <div class="navbar-brand" id="nav-search">
-              <form class="form-inline" action="/stations/search">
-                <input class="form-control" type="search" name="zip" placeholder="Zip Code" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+              <form class="form-inline" action= <%= search_path(current_user) %>>
+                <input class="form-control" type="search" name="zip" placeholder="Zip Code">
+                <button class="btn" type="submit">Search</button>
               </form>
             </div>
         </div><!--/.nav-collapse -->

@@ -1,6 +1,6 @@
-<h1>Welcome, <%= @user.name %>!</h1>
+<h1>Welcome, <%= current_user.name %>!</h1>
 <h4> You have <%= @stations.count %> stations saved.</h4>
-<%= link_to "Show stations near #{@user.name}", user_path(@user) %>
+<%= link_to "Show stations near #{current_user.name}", user_path(current_user) %>
 <table>
   <tr>
     <th>Name</th>

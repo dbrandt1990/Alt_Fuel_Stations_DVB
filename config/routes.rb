@@ -20,9 +20,9 @@ Rails.application.routes.draw do
   # get '/login' => 'sessions#new'
   # post '/login' => 'sessions#create'
   
-  get '/users/sign_out' => 'sessions#destroy'
+  # get '/users/sign_out' => 'sessions#destroy'
 
-  get '/users/:id/settings' => 'users#settings'
+  get '/users/:id/settings' => 'users#settings', as: 'settings'
   post '/users/:id/settings' => 'users#update_settings'
 
   #add and remove associations of user to station
@@ -39,7 +39,7 @@ Rails.application.routes.draw do
 
 
   get '/stations/search_form' => 'stations#search_form'
-  get '/stations/search' => 'stations#search'
+  get '/stations/search' => 'stations#search', as: 'search'
 
 
   resources :users
