@@ -2,16 +2,29 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
-    has_secure_password
-    validates :email, uniqueness:{message: "already exists."}
+         :recoverable, :rememberable, :validatable, 
+         :omniauthable, :omniauth_providers => [:github]
+         
     has_many :users_station
     has_many :stations, through: :users_station
     has_many :notes
-#!Oauth 
-    # def self.find_or_create_by_omniauth(auth_hash)
-    #     self.where(email: auth_hash['info']['email']).first_or_create do |user|
-    #         user.password = SecureRandom.hex
-    #     end
-    # end
+
+    def self.from_omniauth(auth)
+      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+        user.email = auth.info.email
+        user.password = Devise.friendly_token[0, 20]
+        user.name = auth.info.name 
+        # skip the confirmation emails.
+        user.skip_confirmation!
+      end
+    end
+
+    def self.new_with_session(params, session)
+      super.tap do |user|
+        if data = session["devise.github_data"] && session["devise.github_data"]["extra"]["raw_info"]
+          user.email = data["email"] if user.email.blank?
+        end
+      end
+    end
+
 end

@@ -7,34 +7,30 @@
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%# <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
 
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        <% if loggedin? %>
-          <a class="navbar-brand" href="<%= "/users/#{current_user.id}"%>"/>Home</a>
-          <a class="navbar-brand" href="<%= "/users/#{current_user.id}/settings" %>"/>Settings</a>
-          <a class="navbar-brand" href="<%= "/stations/search_form" %>"/>Search Stations</a>
-          <a class="navbar-brand" href="<%= "/logout" %>"/>Log Out</a>
-        <% else %>
-        <a class="navbar-brand" href="<%= "/" %>">Login</a>
-          <a class="navbar-brand" href="<%= "/signup" %>">Sign Up</a>
-        <% end %>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
+        <div class="container">
+          <div class="navbar-header">
 
-          </ul>
+            <% if user_signed_in? %>
+              <a class="navbar-brand" href="<%= "/users/#{current_user.id}"%>"/>Home</a>
+              <a class="navbar-brand" href="<%= "/users/#{current_user.id}/settings" %>"/>Settings</a>
+              <a class="navbar-brand" href="<%= "/stations/search_form" %>"/>Search Stations</a>
+              <a class="navbar-brand" href="<%= destroy_user_session_path %>"/>Log Out</a>
+            <% else %>
+              <a class="navbar-brand" href="<%= new_user_session_path %>">Login</a>
+              <a class="navbar-brand" href="<%= new_user_registration_path %>">Sign Up</a>
+            <% end %>
+            <div class="navbar-brand" id="nav-search">
+              <form class="form-inline" action="/stations/search">
+                <input class="form-control" type="search" name="zip" placeholder="Zip Code" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+              </form>
+            </div>
         </div><!--/.nav-collapse -->
       </div>
     </div>

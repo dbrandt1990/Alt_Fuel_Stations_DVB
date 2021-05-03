@@ -22,5 +22,6 @@
     <%= f.submit "Log in" %>
   </div>
 <% end %>
-
+<!---changed the path below from authenticate to callback to try and hit github method instaed of params now getting csrf error--->
+<%= button_to "Sign in with GitHub", user_github_omniauth_authorize_path %>
 <%= render "devise/shared/links" %>

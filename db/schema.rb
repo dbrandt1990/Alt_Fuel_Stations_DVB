@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_01_024152) do
+ActiveRecord::Schema.define(version: 2021_05_02_194313) do
 
   create_table "notes", force: :cascade do |t|
     t.text "content"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 2021_05_01_024152) do
     t.boolean "J1772", default: false
     t.boolean "J1772COMBO", default: false
     t.boolean "CHADEMO", default: false
-    t.boolean "Tesla", default: false
+    t.boolean "TESLA", default: false
     t.boolean "BD", default: false
     t.boolean "CNG", default: false
     t.boolean "ELEC", default: false
@@ -56,7 +56,6 @@ ActiveRecord::Schema.define(version: 2021_05_01_024152) do
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email", default: "", null: false
-    t.string "password_digest"
     t.string "zip"
     t.boolean "BD", default: false
     t.boolean "CNG", default: false
@@ -71,6 +70,8 @@ ActiveRecord::Schema.define(version: 2021_05_01_024152) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "provider"
+    t.string "uid"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

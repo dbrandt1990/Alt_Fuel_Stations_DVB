@@ -272,7 +272,6 @@ DEPENDENCIES
   httparty (~> 0.18.1)
   jbuilder (~> 2.7)
   listen (~> 3.3)
-  omniauth
   omniauth-github
   omniauth-rails_csrf_protection
   puma (~> 5.0)

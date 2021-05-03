@@ -64,5 +64,4 @@ gem 'dotenv-rails'
 gem 'devise'
 
 gem 'omniauth-rails_csrf_protection'
-gem 'omniauth'
 gem 'omniauth-github'

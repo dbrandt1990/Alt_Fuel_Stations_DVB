@@ -15,7 +15,7 @@ class CreateStations < ActiveRecord::Migration[6.1]
       t.boolean :J1772, default: false
       t.boolean :J1772combo, default: false
       t.boolean :CHADEMO , default: false
-      t.boolean :Tesla , default: false
+      t.boolean :TESLA , default: false
       #Fuel_Types
       t.boolean :BD, default: false
       t.boolean :CNG, default: false
