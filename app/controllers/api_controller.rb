@@ -50,14 +50,14 @@ module ApiController
                 if !outlets.nil?
                     if !outlets.empty?
                         outlets.each do |outlet|
-                            station.update(outlet.to_sym => true)
+                            station.update(outlet.upcase.to_sym => true)
                         end
                     end
                 end
 
                 if fuel_type_code.is_a?(Array)
                     fuel_type_code.each do |f|
-                        station.update(f.to_sym => true)
+                        station.update(f.upcase.to_sym => true)
                     end
                 else
                     station.update(fuel_type_code.to_sym => true)
@@ -76,7 +76,8 @@ module ApiController
 
             method.each do |station|
                 ApiController.create_station(station)
-            end   
+            end 
+            stations = Station.where(zip: zip)
         #add station from DB if user doesn't have
         else 
             stations = Station.where(zip: zip)

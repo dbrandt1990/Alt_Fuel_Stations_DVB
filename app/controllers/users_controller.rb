@@ -2,12 +2,14 @@ class UsersController < ApplicationController
     extend ApiController
 
     def show
-        @user = current_user
-        stations = Station.where(zip: @user.zip)
+        stations = Station.where(zip: current_user.zip)
+        if stations.empty?
+            stations = ApiController.create_station_objects(current_user.zip, ApiController.get_stations_from_zip(current_user.zip))
+        end
         @stations = []
 
         stations.each do |s|
-            if check_settings(s,@user)
+            if check_settings(s,current_user)
                 @stations << s
             end
         end
@@ -16,9 +18,8 @@ class UsersController < ApplicationController
     end
 
     #show all users stations
-    def users_stations
-        @user = current_user
-        @stations = @user.stations
+    def users_stations 
+        @stations = current_user.stations
         render '/users/users_stations'
     end
 
