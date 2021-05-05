@@ -22,6 +22,12 @@
             <li>
               <a href="<%= user_path(current_user) %>"/>Home</a>
             </li>
+             <li>
+              <a href="<%= user_stations_path(current_user) %>"/>Your Stations</a>
+            </li>
+             <li>
+              <a href="<%= new_user_station_path(current_user) %>"/>Create Station</a>
+            </li>
             <li>
               <a href="<%= settings_path(current_user) %>"/>Settings</a>
             </li>

@@ -1,14 +1,39 @@
 require_relative './api_controller.rb'
 
 class StationsController < ApplicationController
+
     def index
         @stations = current_user.stations
         render '/users/users_stations'
     end
 
+    def public
+        @message = "Displaying Public Stations in #{current_user.zip}"
+        @stations =  Station.public_only
+        render '/users/show'
+    end
+
     def show 
         @station = Station.find_by(id:params[:id])
         render '/stations/show'
+    end
+
+    def new
+        @station = Station.new
+    end
+
+    def create
+        current_user.stations.build(
+            name: params[:station][:name],
+            city: params[:station][:city],
+            state: params[:station][:state],
+            zip: params[:station][:zip],
+            address: params[:station][:address],
+            phone: params[:station][:phone],
+            ELEC: true,
+            access: "residential"
+        ).save
+        redirect_to user_path(current_user)
     end
 
     def add_user

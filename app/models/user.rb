@@ -4,14 +4,18 @@ class User < ApplicationRecord
     has_many :stations, through: :users_station
     has_many :notes
 
-    # def self.from_omniauth(auth)
-    #   where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-    #     user.email = auth.info.email
-    #     user.password = Devise.friendly_token[0, 20]
-    #     user.name = auth.info.name 
-    #     # skip the confirmation emails.
-    #     user.skip_confirmation!
-    #   end
-    # end
+    scope :public_stations, -> {where(access: 'public')}
+    scope :residential_stations, -> {where(access: 'residential')}
 
+        def self.from_omniauth(auth_hash)
+        user = User.find_or_create_by(email: auth_hash['info']['email'])
+        if user.id.nil?
+            user.name = auth_hash['info']['name']         
+            user.password = SecureRandom.hex(10)
+            user.save
+            user
+        else
+            user
+        end
+    end
 end

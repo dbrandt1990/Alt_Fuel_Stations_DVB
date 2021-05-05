@@ -1,9 +1,13 @@
+require_relative './api_controller.rb'
+
 class UsersController < ApplicationController
-    extend ApiController
+    skip_before_action :require_login, only: [:new, :create]
 
     def new
-        @user = User.new
-        render '/users/new'
+        unless user_signed_in?
+            @user = User.new
+            render '/users/new'
+        end
     end
 
     def create
@@ -38,6 +42,24 @@ class UsersController < ApplicationController
             @stations = []
             flash.now[:alert] = "Go to settings to set your home zip."
         end
+    end
+
+    def update
+        email = params[:user][:email]
+        password = params[:user][:email]
+
+        if email != ""
+            current_user.update(email: email)
+        end
+        if password != ""
+            current_user.update(password: password)
+        end
+        redirect_to edit_user_path(current_user), alert: "User updated"
+    end
+    
+    def destroy
+        User.find(current_user.id).destroy
+        redirect_to users_sign_up_path
     end
 
     def settings

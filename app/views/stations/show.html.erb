@@ -1,5 +1,6 @@
+<h3><%= @station.users.count %> users have this station saved</h3>
+
 <div id="card_container">
-<h2><%= @station.users.count%> users have this station saved</h2>
 
    <h3><%= @station.name %></h3><br>
    <p>Address: <%= @station.address %></p>
@@ -15,7 +16,7 @@
         <li>
             <p> <%= n.content %>  
             <% if n.user ==  current_user %>
-               <%= link_to "remove", note_path(n)%>
+               <%= link_to "remove", remove_note_path(n)%>
                <% else %>
                <%= "created by: #{n.user.name}" %>
             <% end %>

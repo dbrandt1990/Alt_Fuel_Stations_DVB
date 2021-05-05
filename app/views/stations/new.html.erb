@@ -1,8 +1,14 @@
 <h1>Create a New Residential Station</h1>
-<%= form_for(:station) do |f|%>
+<%= form_for :station, url: user_stations_path(current_user) do |f|%>
 
     <%= f.label :name %><br>
     <%= f.text_field :name%><br>
+        
+    <%= f.label :city %><br>
+    <%= f.text_field :city %><br><br>
+
+    <%= f.label :state %><br>
+    <%= f.text_field :state %><br><br>
 
     <%= f.label :zip %><br>
     <%= f.text_field :zip %><br><br>
@@ -10,22 +16,8 @@
     <%= f.label :address %><br>
     <%= f.text_area :address %><br><br>
 
-    <h4><strong>Select Fuel Options Below</strong></h4><br>
+    <%= f.label :phone %><br>
+    <%= f.text_field :phone %><br><br>
 
-    <%= f.label "Electric" %>
-    <%= f.check_box :ELEC %><br>
-    <%= f.label "Biodisel" %>
-    <%= f.check_box :BD %><br>
-    <%= f.label "Compressed Natural Gas" %>
-    <%= f.check_box :CNG %><br>
-    <%= f.label "E85" %>
-    <%= f.check_box :E85 %><br>
-    <%= f.label "Hydrogen" %>
-    <%= f.check_box :HY %><br>
-    <%= f.label "Liquefied Natural Gas" %>
-    <%= f.check_box :LNG %><br>
-    <%= f.label "Propane" %>
-    <%= f.check_box :LPG %><br><br>
-
-    <%= f.submit "Update Settings"%>
+    <%= f.submit "Create Residential Station"%>
 <%end%>

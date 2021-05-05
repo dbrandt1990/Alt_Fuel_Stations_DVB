@@ -1,0 +1,12 @@
+<h2>Edit User</h2>
+<%= form_for :user, url: user_path(current_user), method: :patch do |f|%>
+   
+    <%= f.label :email %><br>
+    <%= f.email_field :email, value: current_user.email %><br>
+
+    <%= f.label :password %><br>
+    <%= f.password_field :password %><br>
+
+    <%= f.submit "Update User"%>
+<%end%>
+<%= button_to "Delete My Account", user_path(current_user), :method => :delete%>

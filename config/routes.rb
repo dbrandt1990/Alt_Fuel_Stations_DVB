@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   root 'sessions#new'
 
   #Oauth
-  match '/auth/:provider/callback', to: 'sessions#omniauth', via: [:get, :post]
+  match '/auth/:provider/callback', to: 'sessions#create', via: [:get, :post]
 
   get '/users/sign_up' => 'users#new', as: 'new_user'
   post '/users/sign_up' => 'users#create'
@@ -17,22 +17,24 @@ Rails.application.routes.draw do
   get '/users/:id/settings' => 'users#settings', as: 'settings'
   post '/users/:id/settings' => 'users#update_settings'
 
+  #scope method
+  get '/users/:id/stations/public_only' => "stations#public"
+
+  #check is stations in zip have changed
+  get '/stations/check_for_updates' => 'stations#check_for_updates'
+  get '/stations/search' => 'stations#search', as: 'search'
+
+  resources :users, only: [:new, :create, :edit, :update, :destroy, :show] do
+    resources :stations, only: [:index, :new, :create]
+  end
+  resources :stations, only: [:show] do
+    resources :notes, only: [:create]
+  end
+
   #add and remove associations of user to station
   get '/users/:user_id/stations/:id/delete' => 'stations#delete_user', as: 'remove_station'
   get '/users/:user_id/stations/:id' => 'stations#add_user', as: 'add_station'
 
   get '/notes/:id/delete' => 'notes#destroy', as: 'remove_note' 
 
-  #check is stations in zip have changed
-  get '/stations/check_for_updates' => 'stations#check_for_updates'
-
-  get '/stations/search' => 'stations#search', as: 'search'
-
-
-  resources :users, only: [:new, :create, :edit, :update, :destroy, :show] do
-    resources :stations, only: [:index]
-  end
-  resources :stations, only: [:show] do
-    resources :notes, only: [:create]
-  end
 end
