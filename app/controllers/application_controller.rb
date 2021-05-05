@@ -1,14 +1,12 @@
 class ApplicationController < ActionController::Base
-    before_action :configure_permitted_parameters, if: :devise_controller?
-    
-    def homepage
-        render "/homepage"
-    end
+  helper_method :current_user, :user_signed_in?
 
-    protected
-  
-    def configure_permitted_parameters
-      devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :zip])
-    end
+  def current_user
+      User.find_by(id:session[:user_id])
+  end
+
+  def user_signed_in?
+      current_user
+  end
 
 end

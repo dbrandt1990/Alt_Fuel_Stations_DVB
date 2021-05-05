@@ -14,7 +14,7 @@ gem 'bootstrap-sass', '3.3.7'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-# gem 'webpacker'
+gem 'webpacker'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -61,7 +61,7 @@ gem "httparty", "~> 0.18.1"
 
 gem 'dotenv-rails'
 
-gem 'devise'
-
 gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-github'
+gem 'omniauth-google-oauth2'
+# gem 'omniauth'

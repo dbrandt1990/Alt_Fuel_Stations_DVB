@@ -1,7 +1,7 @@
 <h1>Welcome, <%= current_user.name %>!</h1>
 <h4> You have <%= @stations.count %> stations in your zip.</h4>
 <%= link_to "Show all #{current_user.name}'s stations", user_stations_path(current_user) %>
-<%= link_to "Check for Updates", "/stations/updated" %>
+<%= link_to "Check for Updates", "/stations/check_for_updates" %>
 
 <table>
   <tr>
@@ -23,11 +23,11 @@
             <%= s.access %>
         </td>
         <td>
-           <%= link_to "Show #{s.name}", "/stations/#{s.id}"%>
+           <%= link_to "Show #{s.name}", station_path(s)%>
         </td>
         <td>
         <!---show add only if current_user doesn't already have station saved--->
-           <%= link_to "Add", add_station_path(current_user.id, s.id)%>
+           <%= link_to "Add", add_station_path(current_user, s)%>
         </td>
     </tr>
   <% end %>

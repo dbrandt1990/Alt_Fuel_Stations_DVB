@@ -1,4 +1,5 @@
 <div id="card_container">
+<h2><%= @station.users.count%> users have this station saved</h2>
 
    <h3><%= @station.name %></h3><br>
    <p>Address: <%= @station.address %></p>
@@ -14,7 +15,7 @@
         <li>
             <p> <%= n.content %>  
             <% if n.user ==  current_user %>
-               <%= link_to "remove", "/notes/#{n.id}/delete" %>
+               <%= link_to "remove", note_path(n)%>
                <% else %>
                <%= "created by: #{n.user.name}" %>
             <% end %>
@@ -23,13 +24,13 @@
    <% end %>
    </ul>
    
-   <%= form_tag('/notes') %>
+   <%= form_tag station_notes_path(@station) %>
    <%= hidden_field :note, :station_id, :value => @station.id %>
    <%= text_area_tag :content %>
    <%= submit_tag "Add Note" %>
    
    <% if @station.users.find_by(id: current_user.id) %>
-      <%= link_to "Remove Station", "/users/#{current_user.id}/stations/#{@station.id}/delete", :style => 'color:red;' %>
+      <%= link_to "Remove Station", remove_station_path(current_user, @station), :style => 'color:red;' %>
    <% end %>
    
 </div>

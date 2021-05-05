@@ -28,11 +28,6 @@ class StationsController < ApplicationController
         redirect_to "/users/#{current_user.id}/stations"
     end
 
-    # def search_page
-    #     @stations = []
-    #     render '/stations/search'
-    # end
-
     def search
         @stations = ApiController.create_station_objects(params[:zip], ApiController.get_stations_from_zip(params[:zip]))
         render '/stations/search'

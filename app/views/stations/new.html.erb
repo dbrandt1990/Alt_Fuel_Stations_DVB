@@ -1,12 +1,14 @@
-<h1><%= current_user.name %>'s Settings</h1>
-
-<%= form_for(:user) do |f|%>
+<h1>Create a New Residential Station</h1>
+<%= form_for(:station) do |f|%>
 
     <%= f.label :name %><br>
     <%= f.text_field :name%><br>
 
-    <%= f.label "Change Home Zip Code" %><br>
+    <%= f.label :zip %><br>
     <%= f.text_field :zip %><br><br>
+
+    <%= f.label :address %><br>
+    <%= f.text_area :address %><br><br>
 
     <h4><strong>Select Fuel Options Below</strong></h4><br>
 
@@ -27,4 +29,3 @@
 
     <%= f.submit "Update Settings"%>
 <%end%>
-<!---<%= link_to "To Change Email and Password, or to cancle your acount click here", edit_user_path%>--->
