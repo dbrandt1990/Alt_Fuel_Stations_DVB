@@ -3,5 +3,6 @@ class Station < ApplicationRecord
     has_many :users, through: :users_station
     has_many :notes
 
-    scope :public_only, -> { where(access: 'public') }
+    scope :residential, -> {where(access: 'residential')}
+    scope :flagged, -> {where( flagged: true)}
 end

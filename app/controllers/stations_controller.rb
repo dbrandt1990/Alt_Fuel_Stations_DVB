@@ -7,9 +7,15 @@ class StationsController < ApplicationController
         render '/users/users_stations'
     end
 
-    def public
-        @message = "Displaying Public Stations in #{current_user.zip}"
-        @stations =  Station.public_only
+    def scope
+        scope_method = params[:scope]
+        if scope_method == "flagged"
+            @stations =  Station.where(zip: current_user.zip).flagged
+        else 
+            @stations =  Station.where(zip: current_user.zip).residential
+        end
+        @message = "Displaying #{params[:scope].capitalize} Stations in #{current_user.zip}"
+        
         render '/users/show'
     end
 
@@ -31,7 +37,10 @@ class StationsController < ApplicationController
             address: params[:station][:address],
             phone: params[:station][:phone],
             ELEC: true,
-            access: "residential"
+            status: "Pending Approval",
+            access: "residential",
+            flagged: true,
+            updates: false
         ).save
         redirect_to user_path(current_user)
     end

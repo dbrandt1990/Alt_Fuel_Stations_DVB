@@ -4,10 +4,7 @@ class User < ApplicationRecord
     has_many :stations, through: :users_station
     has_many :notes
 
-    scope :public_stations, -> {where(access: 'public')}
-    scope :residential_stations, -> {where(access: 'residential')}
-
-        def self.from_omniauth(auth_hash)
+    def self.from_omniauth(auth_hash)
         user = User.find_or_create_by(email: auth_hash['info']['email'])
         if user.id.nil?
             user.name = auth_hash['info']['name']         

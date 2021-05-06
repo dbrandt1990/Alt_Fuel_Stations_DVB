@@ -4,9 +4,11 @@ class UsersController < ApplicationController
     skip_before_action :require_login, only: [:new, :create]
 
     def new
-        unless user_signed_in?
+        if user_signed_in?
+            redirect_to user_path(current_user)
+        else
             @user = User.new
-            render '/users/new'
+            render :new
         end
     end
 
@@ -46,7 +48,7 @@ class UsersController < ApplicationController
 
     def update
         email = params[:user][:email]
-        password = params[:user][:email]
+        password = params[:user][:password]
 
         if email != ""
             current_user.update(email: email)

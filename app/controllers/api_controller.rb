@@ -1,7 +1,6 @@
 require 'httparty'
 
 module ApiController
-    include HTTParty
 
     def self.get_stations_from_zip(zip)
         zip_code = zip
@@ -67,13 +66,9 @@ module ApiController
         end
     end
 
-    #use appropriate api get method
     def self.create_station_objects(zip, method)
-        #array to return stations found.
-        stations = []
-        #ONLy make api call if user and DB don't have station already
+        #ONLY make api call if user and DB don't have station already
         if Station.find_by(zip: zip).nil?
-
             method.each do |station|
                 ApiController.create_station(station)
             end 
@@ -84,33 +79,4 @@ module ApiController
         end
         stations
     end
-
-        #!may not need this method, just get all in zip and then filter by check_settings in user controller
-    # def self.get_stations_from_settings(user)
-    #     users_fuel_types = {
-    #       ELEC: user.ELEC,
-    #       BD: user.BD,
-    #       CNG: user.CNG,
-    #       E85: user.E85,
-    #       HY: user.HY,
-    #       LNG: user.LNG,
-    #       LPG: user.LPG
-    #     }
-
-
-    #     fuel_type_url = []
-    #     users_fuel_types.each do |type, user_setting|
-    #         if user_setting
-    #             fuel_type_url << type.to_s
-    #         end
-    #     end
-
-    #     fuel_type_url = fuel_type_url.join(',')
-       
-    #     url = "https://developer.nrel.gov/api/alt-fuel-stations/v1.json?fuel_type=#{fuel_type_url}&zip=#{user.zip}&api_key=#{ENV['API_KEY']}"
-    #     doc = HTTParty.get(url)
-    #     data = doc.parsed_response
-    #     data["fuel_stations"]
-    # end
-
 end
