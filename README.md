@@ -16,9 +16,6 @@ Use bundler [bundle](https://not_sure/en/stable/) to install Alt_fuels.
 bundle install alt_fuels
 ```
 
-## Usage
-ADD STUFF
-
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
