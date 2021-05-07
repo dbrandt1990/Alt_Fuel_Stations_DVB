@@ -1,5 +1,7 @@
 <h1>Create a New Residential Station</h1>
 
+<%= render "errors" %>
+
 <div id="card_container">
 
     <%= form_for :station, url: user_stations_path(current_user) do |f|%>
