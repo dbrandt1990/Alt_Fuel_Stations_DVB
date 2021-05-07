@@ -40,7 +40,7 @@ class StationsController < ApplicationController
         if @station.save
             redirect_to user_path(current_user)
         else    
-           redirect_to new_user_station_path(current_user), alert: @station.errors.full_messages.first
+           render new_user_station_path(current_user), alert: @station.errors.full_messages.first
         end
     end
 
