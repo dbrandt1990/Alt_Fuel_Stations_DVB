@@ -77,9 +77,21 @@ class StationsController < ApplicationController
                 current_stations.each do |station|
                     
                     if !new_stations.select{|s| s['id'] == station.api_id}.any?
-                        @message = "#{station.name}, has been removed."
-                        station.destroy
-                        render "/stations/check_for_updates"
+
+                        if station.access == "residential"
+
+                            if station.flagged
+                                @message = "#{station.name} Residential Station, is pending approval for public use."
+                            else
+                                @message = "#{station.name} Residential Staition, is availible for public use!"
+                            end
+                            render "/stations/check_for_updates"
+                            
+                        else
+                            @message = "#{station.name}, has been removed."
+                            station.destroy
+                            render "/stations/check_for_updates"
+                        end
                     end
 
                 end
