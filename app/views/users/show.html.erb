@@ -5,8 +5,8 @@
   <h4> You have <%= @stations.count %> stations in your zip.</h4>
 <% end %>
 
-<%= link_to "Show all #{current_user.name}'s stations", user_stations_path(current_user) %> |
-<%= link_to "Check for Updates", stations_check_for_updates_path %>
+<%= link_to "Show all #{current_user.name}'s stations", user_stations_path(current_user), class:'btn btn-primary' %>
+<%= link_to "Check for Updates", stations_check_for_updates_path, class:'btn btn-warning' %>
 
 <table>
   <tr>
