@@ -25,7 +25,7 @@
           </td>
           <td>
           <!---show add only if user doesn't already have station saved--->
-             <%= link_to "Add", add_station_path(current_user, s)%>
+             <%= link_to "Add", add_station_path(current_user, s), class:'btn btn-primary' %>
           </td>
       </tr>
     <% end %>
