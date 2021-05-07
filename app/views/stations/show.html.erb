@@ -28,10 +28,13 @@
    <%= form_tag station_notes_path(@station) %>
    <%= hidden_field :note, :station_id, value: @station.id %>
    <%= text_area_tag :content %>
-   <%= submit_tag "Add Note", class: 'btn btn-primary'%>
    
-   <% if @station.users.find_by(id: current_user.id) %>
-      <%= link_to "Remove Station", remove_station_path(current_user, @station), class: 'btn btn-danger' %>
-   <% end %>
+   <div class='buttons'>
+      <%= submit_tag "Add Note", class: 'btn btn-primary'%>
+
+      <% if @station.users.find_by(id: current_user.id) %>
+         <%= link_to "Remove Station", remove_station_path(current_user, @station), class: 'btn btn-danger' %>
+      <% end %>
+   </div>
    
 </div>

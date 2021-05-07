@@ -8,11 +8,13 @@
 
     <%= f.label :password %><br>
     <%= f.password_field :password %><br>
-
+<div class='buttons'>
     <%= f.submit "Sign In", class: 'btn btn-primary' %>
+</div>
 <%end%>
-
-<%= button_to "Login with GitHub", '/auth/github', class: 'btn' %>
+<div class='buttons'>
+    <%= button_to "Login with GitHub", '/auth/github', class: 'btn' %>
+</div>
 
 </div>
 

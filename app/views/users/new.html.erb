@@ -16,10 +16,11 @@
     
         <%= f.label :password %><br>
         <%= f.password_field :password, required: true %><br>
-    
+    <div class='buttons'>
         <%= f.submit "Sign Up", class: 'btn btn-primary'%>
+    </div>
     <%end%>
-
-    <%= button_to "Login with GitHub", '/auth/github', class: 'btn' %>
-    
+    <div class='buttons'>
+        <%= button_to "Login with GitHub", '/auth/github', class: 'btn' %>
+    </div>
 </div>

@@ -24,7 +24,8 @@
     <!--value added to prevent default N/A as placeholder-->
         <%= f.label :phone %><br>
         <%= f.text_field :phone, value: "", placeholder: "(xxx)xxx-xxxx",required: true %><br><br>
-
+    <div class='buttons'>
         <%= f.submit "Create Residential Station", class: 'btn btn-primary'%>
+    </div>
     <%end%>
 </div>
