@@ -22,7 +22,7 @@ class UsersController < ApplicationController
             end
             redirect_to user_path(@user)
         else
-            redirect_to users_sign_up_path
+            render :new
         end
     end
 

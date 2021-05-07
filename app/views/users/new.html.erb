@@ -4,18 +4,18 @@
     
     <%= form_for :user, url: users_path do |f|%>
         <%= f.label :name %><br>
-        <%= f.text_field :name%><br>
+        <%= f.text_field :name, required: true%><br>
     
         <%= f.label :zip %><br>
-        <%= f.text_field :zip %><br>
+        <%= @user.errors.full_messages_for(:zip)[0] if @user.errors.any? %>
+        <%= f.text_field :zip, required: true %><br>
     
     
         <%= f.label :email %><br>
-        <%= @user.errors.full_messages.first if @user.errors.any? %>
-        <%= f.email_field :email %><br>
+        <%= f.email_field :email, required: true %><br>
     
         <%= f.label :password %><br>
-        <%= f.password_field :password %><br>
+        <%= f.password_field :password, required: true %><br>
     
         <%= f.submit "Sign Up"%>
     <%end%>
