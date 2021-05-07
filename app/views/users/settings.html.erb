@@ -1,30 +1,33 @@
 <h1><%= current_user.name %>'s Settings</h1>
 
-<%= form_for(:user) do |f|%>
+<div id="card_container">
 
-    <%= f.label :name %><br>
-    <%= f.text_field :name%><br>
+    <%= form_for(:user) do |f|%>
 
-    <%= f.label "Change Home Zip Code" %><br>
-    <%= f.text_field :zip %><br><br>
+        <%= f.label :name %><br>
+        <%= f.text_field :name%><br>
 
-    <h4><strong>Select Fuel Options Below</strong></h4><br>
+        <%= f.label "Change Home Zip Code" %><br>
+        <%= f.text_field :zip %><br><br>
 
-    <%= f.label "Electric" %>
-    <%= f.check_box :ELEC %><br>
-    <%= f.label "Biodisel" %>
-    <%= f.check_box :BD %><br>
-    <%= f.label "Compressed Natural Gas" %>
-    <%= f.check_box :CNG %><br>
-    <%= f.label "E85" %>
-    <%= f.check_box :E85 %><br>
-    <%= f.label "Hydrogen" %>
-    <%= f.check_box :HY %><br>
-    <%= f.label "Liquefied Natural Gas" %>
-    <%= f.check_box :LNG %><br>
-    <%= f.label "Propane" %>
-    <%= f.check_box :LPG %><br><br>
+        <h4><strong>Select Fuel Options Below</strong></h4><br>
 
-    <%= f.submit "Update Settings"%>
-<%end%>
-<%= link_to "To Change Email and Password, or to cancel your acount click here", edit_user_path %>
+        <%= f.label "Electric" %>
+        <%= f.check_box :ELEC %><br>
+        <%= f.label "Biodisel" %>
+        <%= f.check_box :BD %><br>
+        <%= f.label "Compressed Natural Gas" %>
+        <%= f.check_box :CNG %><br>
+        <%= f.label "E85" %>
+        <%= f.check_box :E85 %><br>
+        <%= f.label "Hydrogen" %>
+        <%= f.check_box :HY %><br>
+        <%= f.label "Liquefied Natural Gas" %>
+        <%= f.check_box :LNG %><br>
+        <%= f.label "Propane" %>
+        <%= f.check_box :LPG %><br><br>
+
+        <%= f.submit "Update Settings"%>
+    <%end%>
+    <%= link_to "Change Email/Password, or Cancel your acount", edit_user_path %>
+</div>

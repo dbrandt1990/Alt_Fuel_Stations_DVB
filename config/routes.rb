@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   post '/users/:id/settings' => 'users#update_settings'
 
   #scope methods
-  get '/stations/:scope' => "stations#scope"
+  get 'users/:id/stations/residential' => "stations#residential"
 
   #check is stations in zip have changed
   get '/stations/check_for_updates' => 'stations#check_for_updates'

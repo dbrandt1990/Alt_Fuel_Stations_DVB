@@ -68,7 +68,7 @@ module ApiController
 
     def self.create_station_objects(zip, method)
         #ONLY make api call if user and DB don't have station already
-        if Station.find_by(zip: zip).nil?
+        if Station.find_by(zip: zip, access: 'private').nil? && Station.find_by(zip: zip, access: 'public').nil?
             method.each do |station|
                 ApiController.create_station(station)
             end 

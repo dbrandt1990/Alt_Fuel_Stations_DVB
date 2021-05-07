@@ -7,21 +7,15 @@ class StationsController < ApplicationController
         render '/users/users_stations'
     end
 
-    def scope
-        scope_method = params[:scope]
-        if scope_method == "flagged"
-            @stations =  Station.where(zip: current_user.zip).flagged
-        else 
-            @stations =  Station.where(zip: current_user.zip).residential
-        end
-        @message = "Displaying #{params[:scope].capitalize} Stations in #{current_user.zip}"
-        
-        render '/users/show'
-    end
-
     def show 
         @station = Station.find_by(id:params[:id])
         render '/stations/show'
+    end
+
+    def residential
+        @stations =  Station.where(zip: current_user.zip).residential
+        @message = "Displaying Residential Stations in #{current_user.zip}"
+        render '/users/show'
     end
 
     def new
@@ -29,7 +23,7 @@ class StationsController < ApplicationController
     end
 
     def create
-        current_user.stations.build(
+        @station = current_user.stations.build(
             name: params[:station][:name],
             city: params[:station][:city],
             state: params[:station][:state],
@@ -41,8 +35,13 @@ class StationsController < ApplicationController
             access: "residential",
             flagged: true,
             updates: false
-        ).save
-        redirect_to user_path(current_user)
+        )
+        
+        if @station.save
+            redirect_to user_path(current_user)
+        else    
+           redirect_to new_user_station_path(current_user), alert: @station.errors.full_messages.first
+        end
     end
 
     def add_user

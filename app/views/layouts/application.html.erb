@@ -54,7 +54,9 @@
   <!-- content -->
   <div id="flash_message">
    <% if flash[:alert] %>
-      <div class="alert"><%= flash[:alert] %></div>
+      <div class="alert">
+        <%= flash[:alert] %>
+      </div>
     <% end %>
   </div>
 
