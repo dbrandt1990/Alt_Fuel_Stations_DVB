@@ -13,9 +13,10 @@ class SessionsController < ApplicationController
     end
 
     def create
+        #refactor 
         if request.env['omniauth.auth']
             @user = User.from_omniauth(request.env['omniauth.auth'])
-            session[:user_id] = @user.id   
+            session[:user_id] = @user.id 
             redirect_to user_path(@user)
         else
             @user = User.find_by(email: params[:user][:email]) 

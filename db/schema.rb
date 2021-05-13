@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_04_162827) do
+ActiveRecord::Schema.define(version: 2021_05_13_170514) do
 
   create_table "notes", force: :cascade do |t|
     t.text "content"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 2021_05_04_162827) do
     t.integer "station_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "date_visited"
     t.index ["station_id"], name: "index_users_stations_on_station_id"
     t.index ["user_id"], name: "index_users_stations_on_user_id"
   end

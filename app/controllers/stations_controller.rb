@@ -3,6 +3,7 @@ require_relative './api_controller.rb'
 class StationsController < ApplicationController
 
     def index
+        @users_stations = UsersStation.where(user_id: current_user.id)
         @stations = current_user.stations
         render '/users/users_stations'
     end
@@ -44,8 +45,11 @@ class StationsController < ApplicationController
         end
     end
 
+    def vist_date
+    
+    end
+
     def add_user
-        #add check if user already has station
         station = Station.find(params[:id])
         if current_user.stations.find_by(api_id: station.api_id).nil?
             station.users << current_user

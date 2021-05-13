@@ -3,10 +3,8 @@ class User < ApplicationRecord
     has_many :users_station
     has_many :stations, through: :users_station
     has_many :notes
-    validates :email, presence: true
-    validates :name, presence: true
-    validates :password, presence: true
-    validates :zip, presence: true, length: {is: 5}, numericality: true
+    # make custom validation for zip if not omniauth login
+    # validates :zip, length: {is: 5}, numericality: true
 
 
 

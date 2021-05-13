@@ -56,12 +56,13 @@ class UsersController < ApplicationController
         if password != ""
             current_user.update(password: password)
         end
+        
         redirect_to edit_user_path(current_user), alert: "User updated"
     end
     
     def destroy
         User.find(current_user.id).destroy
-        redirect_to users_sign_up_path
+        redirect_to new_user_path
     end
 
     def settings
@@ -101,7 +102,6 @@ class UsersController < ApplicationController
     def settings_params
         params.require(:user).permit(
             :name,
-            :email,
             :zip,
             :BD,
             :ELEC,

@@ -45,6 +45,7 @@ module ApiController
                     api_id: api_id, 
                     phone: phone,
                 )
+                
                 #set outlets and fuel types for station
                 if !outlets.nil?
                     if !outlets.empty?

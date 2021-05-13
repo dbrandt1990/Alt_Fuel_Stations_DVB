@@ -7,6 +7,7 @@
     <th>Address</th>
     <th>Access</th>
     <th>Link</th>
+    <th>Visited</th>
   </tr>
   <% @stations.each do |s|%>
     <tr>
@@ -21,6 +22,20 @@
         </td>
         <td>
            <%= link_to "Show #{s.name}", station_path(s) %>
+        </td>
+        <td>
+        <% if @users_stations.find_by(station_id: s.id).date_visited.nil? %>
+            <%= form_tag users_station_path(@users_stations.find_by(station_id: s.id)), method: :patch %>
+            <%= hidden_field :date_visited, :station_id, value: s.id %>
+            <%= label_tag :date_visited %>
+            <%= text_field_tag :date_visited %>
+            
+            <div class='buttons'>
+               <%= submit_tag "Update", class: 'btn btn-primary'%>
+            </div>
+            <% else %>
+              <%= @users_stations.find_by(station_id: s.id).date_visited %>
+            <% end %>
         </td>
     </tr>
   <% end %>
