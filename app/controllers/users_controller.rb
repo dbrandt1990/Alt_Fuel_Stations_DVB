@@ -27,15 +27,16 @@ class UsersController < ApplicationController
     end
 
     def show
-        if !current_user.zip.nil?
-            stations = Station.where(zip: current_user.zip)
+        @user = current_user
+        if !@user.zip.nil?
+            stations = Station.where(zip: @user.zip)
             if stations.empty?
-                stations = ApiController.create_station_objects(current_user.zip, ApiController.get_stations_from_zip(current_user.zip))
+                stations = ApiController.create_station_objects(@user.zip, ApiController.get_stations_from_zip(@user.zip))
             end
             @stations = []
         
                 stations.each do |s|
-                    if check_settings(s,current_user)
+                    if check_settings(s, @user)
                     @stations << s
                 end
             end
@@ -47,17 +48,18 @@ class UsersController < ApplicationController
     end
 
     def update
+        user = current_user
         email = params[:user][:email]
         password = params[:user][:password]
 
         if email != ""
-            current_user.update(email: email)
+            user.update(email: email)
         end
         if password != ""
-            current_user.update(password: password)
+            user.update(password: password)
         end
         
-        redirect_to edit_user_path(current_user), alert: "User updated"
+        redirect_to edit_user_path(user), alert: "User updated"
     end
     
     def destroy
@@ -86,11 +88,12 @@ class UsersController < ApplicationController
     end
 
     def update_settings
-        current_user.update(settings_params)
+        user = current_user
+        user.update(settings_params)
 
-        ApiController.create_station_objects(current_user.zip, ApiController.get_stations_from_zip(current_user.zip))
+        ApiController.create_station_objects(user.zip, ApiController.get_stations_from_zip(user.zip))
 
-        redirect_to user_path(current_user.id)
+        redirect_to user_path(user.id)
     end
 
     private 

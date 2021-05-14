@@ -21,11 +21,11 @@
             <%= s.access %>
         </td>
         <td>
-           <%= link_to "Show #{s.name}", station_path(s) %>
+           <%= link_to "Show #{s.name}", station_path(s.id) %>
         </td>
         <td>
         <% if @users_stations.find_by(station_id: s.id).date_visited.nil? %>
-            <%= form_tag users_station_path(@users_stations.find_by(station_id: s.id)), method: :patch %>
+            <%= form_tag user_stations_path(@users_stations.find_by(station_id: s.id)), method: :patch %>
             <%= hidden_field :date_visited, :station_id, value: s.id %>
             <%= label_tag :date_visited %>
             <%= text_field_tag :date_visited %>

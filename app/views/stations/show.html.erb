@@ -1,6 +1,6 @@
-<h3><%= @station.users.count %> users have this station saved</h3>
+<h3><%= @user_count %> users have this station saved</h3>
 
-<div id="card_container">
+<div id='card_container'>
 
    <h3><%= @station.name %></h3><br>
    <p>Address: <%= @station.address %></p>
@@ -11,29 +11,30 @@
    <p>Phone Number: <%= @station.phone %></p>
 
    <p>Notes:</p>
-   <ul id="notes">
-   <% @station.notes.each do |n| %>
+   <ul id='notes'>
+   <% @station_notes.each do |n| %>
         <li>
-            <p> <%= n.content %>  
-            <% if n.user ==  current_user %>
-               <%= link_to "remove", remove_note_path(n)%>
+        <div class='note'>
+            <p> <%= n.content %> </p>
+            <% if n.user ==  @user %>
+               <%= button_to 'remove', station_note_path(@station.id, n.id), method: 'delete', id:'remove_note' %>
                <% else %>
                <%= "created by: #{n.user.name}" %>
             <% end %>
-            </p>
+         </div>
         </li>
    <% end %>
    </ul>
    
-   <%= form_tag station_notes_path(@station) %>
-   <%= hidden_field :note, :station_id, value: @station.id %>
-   <%= text_area_tag :content %>
+   <%= form_with url: station_notes_path(@station) do |f| %>
+   <%= hidden_field_tag :note, :station_id, value: @station.id %>
+   <%= f.text_area :content %>
    
    <div class='buttons'>
-      <%= submit_tag "Add Note", class: 'btn btn-primary'%>
-
-      <% if @station.users.find_by(id: current_user.id) %>
-         <%= link_to "Remove Station", remove_station_path(current_user, @station), class: 'btn btn-danger' %>
+      <%= submit_tag 'Add Note', class: 'btn btn-primary' %>
+      <% end %>
+      <% if @station.users.find_by(id: @user.id) %>
+         <%= button_to 'Remove Station', remove_station_path(@user, @station), method: 'delete', class: 'btn btn-danger' %>
       <% end %>
    </div>
    

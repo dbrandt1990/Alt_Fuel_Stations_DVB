@@ -1,11 +1,11 @@
-<h1>Welcome, <%= current_user.name %>!</h1>
+<h1>Welcome, <%= @user.name %>!</h1>
 <% if @message %>
   <h4><%= @message %></h4>
 <% else %>
   <h4> You have <%= @stations.count %> stations in your zip.</h4>
 <% end %>
 
-<%= link_to "Show all #{current_user.name}'s stations", user_stations_path(current_user), class:'btn btn-primary' %>
+<%= link_to "Show all #{@user.name}'s stations", user_stations_path(@user), class:'btn btn-primary' %>
 <%= link_to "Check for Updates", stations_check_for_updates_path, class:'btn btn-warning' %>
 
 <table>

@@ -3,19 +3,24 @@ require_relative './api_controller.rb'
 class StationsController < ApplicationController
 
     def index
+        @user = current_user
         @users_stations = UsersStation.where(user_id: current_user.id)
-        @stations = current_user.stations
+        @stations = @user.stations
         render '/users/users_stations'
     end
 
     def show 
+        @user = current_user
         @station = Station.find_by(id:params[:id])
+        @user_count = @station.users.count
+        @station_notes = @station.notes
         render '/stations/show'
     end
 
     def residential
-        @stations =  Station.where(zip: current_user.zip).residential
-        @message = "Displaying Residential Stations in #{current_user.zip}"
+        @user = current_user
+        @stations =  Station.where(zip: @user.zip).residential
+        @message = "Displaying Residential Stations in #{@user.zip}"
         render '/users/show'
     end
 
@@ -45,26 +50,6 @@ class StationsController < ApplicationController
         end
     end
 
-    def vist_date
-    
-    end
-
-    def add_user
-        station = Station.find(params[:id])
-        if current_user.stations.find_by(api_id: station.api_id).nil?
-            station.users << current_user
-            redirect_to "/users/#{current_user.id}/stations"
-        else
-            flash[:alert] = "You've already added that station."
-            redirect_to user_path(current_user)
-        end
-    end
-
-    def delete_user
-        current_user.stations.delete(Station.find_by(id: params[:id]))
-        redirect_to "/users/#{current_user.id}/stations"
-    end
-
     def search
         @stations = ApiController.create_station_objects(params[:zip], ApiController.get_stations_from_zip(params[:zip]))
         render '/stations/search'
@@ -72,8 +57,9 @@ class StationsController < ApplicationController
 
     def check_for_updates
         #use ['id'] for new_stations, and api_id for stations in the DB
-        current_stations = Station.where(zip: current_user.zip)
-        new_stations = ApiController.get_stations_from_zip(current_user.zip)
+        user = current_user
+        current_stations = Station.where(zip: user.zip)
+        new_stations = ApiController.get_stations_from_zip(user.zip)
     
         if current_stations.count != new_stations.count
             #station in our DB no longer in API

@@ -18,20 +18,17 @@ Rails.application.routes.draw do
   get '/stations/search' => 'stations#search', as: 'search'
 
   resources :sessions, only: [:new, :create]
+
   resources :users, except: [:index] do
     resources :stations, only: [:index, :new, :create]
   end
   resources :stations, only: [:show] do
-    resources :notes, only: [:create]
+    resources :notes, only: [:create, :destroy]
   end
 
-  resources :users_stations, only: [:update]
-
   #add and remove associations of user to station
-  get '/users/:user_id/stations/:id/delete' => 'stations#delete_user', as: 'remove_station'
-  get '/users/:user_id/stations/:id' => 'stations#add_user', as: 'add_station'
-  
-  #make a button like a link and change this route
-  get '/notes/:id/delete' => 'notes#destroy', as: 'remove_note' 
+  get '/users/:user_id/stations/:id' => 'users_stations#create', as: 'add_station'
+  patch '/users/:user_id/stations/:id' => 'users_stations#update', as: 'add_date_station'
+  delete '/users/:user_id/stations/:id/delete' => 'users_stations#destroy', as: 'remove_station'
 
 end
