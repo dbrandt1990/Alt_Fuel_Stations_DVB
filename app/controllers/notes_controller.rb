@@ -1,8 +1,8 @@
 class NotesController < ApplicationController
 
     def create
-        @station= Station.find(params[:note][:station_id])
-        Note.create(content: params[:content], user_id: current_user.id, station_id: params[:note][:station_id])
+        @station= Station.find(params[:station_id])
+        Note.create(content: params[:content], user_id: current_user.id, station_id: params[:station_id])
         redirect_to station_path(@station)
     end
 
