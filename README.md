@@ -26,6 +26,12 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 Please make sure to update tests as appropriate.
 
+## Blog
+[Blog post on medium](https://dvbrandt90.medium.com/its-the-final-finale-finally-db9a2bc31e4f)
+
+## AuthorU
+[Danny Brandt](https://www.linkedin.com/in/dbrandt1990/)
+
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 
