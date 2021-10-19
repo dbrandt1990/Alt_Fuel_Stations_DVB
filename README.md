@@ -8,6 +8,9 @@ Users will have access to the entire catalog of staions in the US and Canada.
 Users can see which stations in their area have been updated or maybe being built.
 Users can add personal notes that only they can view.
 Users can see notes added by and ADMIN for data managment.
+
+🎥 https://youtu.be/nmwnN6R8BUc
+
 ## Installation
 
 * Fork/Clone repo
