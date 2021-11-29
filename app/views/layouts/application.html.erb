@@ -20,10 +20,10 @@
           <ul class="nav navbar-nav">
             <% if user_signed_in? %>
             <li>
-              <a href="<%= user_path(current_user) %>"/>Home</a>
+              <a href="<%= user_stations_path(current_user) %>"/>Home</a>
             </li>
              <li>
-              <a href="<%= user_stations_path(current_user) %>"/>Your Stations</a>
+              <a href="<%= user_path(current_user) %>"/>Stations Near You</a>
             </li>
              <li>
               <a href="<%= new_user_station_path(current_user) %>"/>Create Station</a>

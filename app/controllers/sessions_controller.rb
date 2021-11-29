@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
 
     def new
         if user_signed_in?
-            redirect_to user_path(current_user.id)
+            redirect_to user_stations_path(current_user.id)
         else
             render 'sessions/new'
         end
@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
         if request.env['omniauth.auth']
             @user = User.from_omniauth(request.env['omniauth.auth'])
             session[:user_id] = @user.id 
-            redirect_to user_path(@user)
+            redirect_to user_stations_path(@user)
         else
             @user = User.find_by(email: params[:user][:email]) 
             if @user.nil?
@@ -25,7 +25,7 @@ class SessionsController < ApplicationController
             else
               return head(:forbidden) unless @user.authenticate(params[:user][:password])   
               session[:user_id] = @user.id   
-              redirect_to user_path(@user)
+              redirect_to user_stations_path(@user)
             end
         end
     end
