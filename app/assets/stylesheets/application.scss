@@ -17,80 +17,84 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
- body {
-    color: gainsboro;
-    padding-top: 70px;
-    padding-bottom: 30px;
-    background-color:#2d2d2d;
-    background-size: cover;
-  }
+body {
+  color: gainsboro;
+  padding-top: 70px;
+  padding-bottom: 30px;
+  background-color: #2d2d2d;
+  background-size: cover;
+}
 
-  .note p,
-  .note#remove_note {
-     float: left;
-  }
-  
+.note p,
+.note#remove_note {
+  float: left;
+}
+
 ul {
-  list-style: none
+  list-style: none;
 }
 
-  #remove_note {
-   background: none!important;
-   border: none;
-   padding: 0!important;
-   margin-left: 10px;
-   /*optional*/
-   font-family: arial, sans-serif;
-   /*input has OS specific font-family*/
-   color: #069;
-   text-decoration: underline;
-   cursor: pointer;
- }
-
-
-  .btn{
-     color:#2d2d2d;
-  }
-
-  .btn-primary{
-   color: gainsboro;
+#remove_note {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  margin-left: 10px;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
-.buttons{
-text-align: center;
-margin-right: 1.8em;
-margin-top: 1.25em;
+.btn {
+  color: #2d2d2d;
 }
 
- #card_container {
-    color: #2d2d2d ;
-    margin-top: 50px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 250px;
-    border-radius: 5%;
-    background-color: gainsboro;
-    padding: 10px;
- }
+.btn-primary {
+  color: gainsboro;
+}
 
- form {
-    margin-left: 1.5em;
-    margin-bottom: 1.25em;
- }
+.buttons {
+  text-align: center;
+  margin-right: 1.8em;
+  margin-top: 1.25em;
+}
 
- h1, h3 {
-     text-align: center;
- }
+#card_container {
+  color: #2d2d2d;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 250px;
+  border-radius: 5%;
+  background-color: gainsboro;
+  padding: 10px;
+}
 
- table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
- 
+input#date_visited {
+  color: #2d2d2d;
+}
+
+form {
+  margin-left: 1.5em;
+  margin-bottom: 1.25em;
+}
+
+h1,
+h3 {
+  text-align: center;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
