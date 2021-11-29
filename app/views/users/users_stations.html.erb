@@ -25,7 +25,8 @@
         </td>
         <td>
         <% if @users_stations.find_by(station_id: s.id).date_visited.nil? %>
-            <%= form_tag user_stations_path(@users_stations.find_by(station_id: s.id)), method: :patch %>
+        <!--reading as a post request, and not showing the date visited on show page even though db updated-->
+            <%= form_tag add_date_station_path(id: s.id), method: :patch %>
             <%= hidden_field :date_visited, :station_id, value: s.id %>
             <%= label_tag :date_visited %>
             <%= text_field_tag :date_visited %>
