@@ -22,7 +22,8 @@ rails s
 If there are User created stations and you click check for updates on the users stations 
 page, those stations will be removed.This happens beacuse the API is not integrating the
 user created stations so when comparing local data to the API data it looks as if those 
-stations don't exist anymore.
+stations don't exist anymore. If this app went live the intention is to integrate the
+residential "stations" into the API after being approved by and admin.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
@@ -32,7 +33,7 @@ Please make sure to update tests as appropriate.
 ## Blog
 [Blog post on medium](https://dvbrandt90.medium.com/its-the-final-finale-finally-db9a2bc31e4f)
 
-## AuthorU
+## Author
 [Danny Brandt](https://www.linkedin.com/in/dbrandt1990/)
 
 ## License
